@@ -34,6 +34,14 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("account_id", accountId);
         return userInfoMapper.selectOne(queryWrapper);
     }
+    public List<UserInfo> getUserInfoList() {
+        return userInfoMapper.selectList(null);
+    }
+    public List<UserInfo> getUserInfoListByKeyword(String keyword) {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", keyword);
+        return userInfoMapper.selectList(queryWrapper);
+    }
     public Integer getUserIdByAccountId(Integer accountId) {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);

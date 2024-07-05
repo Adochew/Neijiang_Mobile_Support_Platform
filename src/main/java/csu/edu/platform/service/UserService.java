@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserService {
     UserInfo getUserInfoByUserId(Integer userId);
     UserInfo getUserInfoByAccountId(Integer accountId);
+    List<UserInfo> getUserInfoList();
+    List<UserInfo> getUserInfoListByKeyword(String keyword);
     Integer getUserIdByAccountId(Integer accountId);
     Boolean addUserInfo(UserInfo userInfo);
     Boolean updateUserInfo(UserInfo userInfo);
