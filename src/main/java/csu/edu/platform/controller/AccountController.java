@@ -47,4 +47,6 @@ public class AccountController {
         String jwt = JWTUtil.generateJwt(map);
         return ResponseUtil.success(jwt);
     }
+
+
 }
