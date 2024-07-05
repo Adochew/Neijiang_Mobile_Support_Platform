@@ -23,6 +23,8 @@ use support_platform;
 
 -- user_info 用户信息表
 -- user_friend 用户好友表
+-- user_friend_category 用户好友类别表
+-- user_friend_application 用户好友申请表
 -- user_favorite_merchant 用户商户收藏表
 -- user_favorite_product 用户产品收藏表
 
@@ -59,8 +61,8 @@ CREATE TABLE system_article (
     category_id INT,
     author_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES system_article_category(category_id),
-    FOREIGN KEY (author_id) REFERENCES system_account(account_id)
+    FOREIGN KEY (category_id) REFERENCES system_article_category(category_id) ON DELETE CASCADE,
+    FOREIGN KEY (author_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
 -- system_article_category 系统文章类别表（预留）
 CREATE TABLE system_article_category (
@@ -82,7 +84,7 @@ CREATE TABLE merchant_info (
     product_category VARCHAR(255),
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (owner_id) REFERENCES system_account(account_id)
+    FOREIGN KEY (owner_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
 -- merchant_product 商户产品表
 CREATE TABLE merchant_product (
@@ -94,8 +96,8 @@ CREATE TABLE merchant_product (
     description TEXT,
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id),
-    FOREIGN KEY (category_id) REFERENCES merchant_product_category(category_id)
+    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES merchant_product_category(category_id) ON DELETE CASCADE
 );
 -- merchant_category 商户类别表（预留）
 CREATE TABLE merchant_category (
@@ -115,8 +117,8 @@ CREATE TABLE merchant_comment (
     content TEXT,
     rating INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id),
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id)
+    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
 -- merchant_item_comment 产品评论表
 CREATE TABLE merchant_product_comment (
@@ -126,8 +128,8 @@ CREATE TABLE merchant_product_comment (
     content TEXT,
     rating INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES merchant_product(product_id),
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id)
+    FOREIGN KEY (product_id) REFERENCES merchant_product(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
 -- merchant_promotion 商户促销表
 CREATE TABLE merchant_promotion (
@@ -137,7 +139,7 @@ CREATE TABLE merchant_promotion (
     end_date DATE,
     details TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id)
+    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE
 );
 
 -- user_info 用户信息表
@@ -148,15 +150,35 @@ CREATE TABLE user_info (
     email VARCHAR(255),
     phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (account_id) REFERENCES system_account(account_id)
+    FOREIGN KEY (account_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
 -- user_friend 用户好友表
 CREATE TABLE user_friend (
     user_id INT,
     friend_id INT,
+    category_id INT,
     PRIMARY KEY (user_id, friend_id),
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id),
-    FOREIGN KEY (friend_id) REFERENCES user_info(user_id)
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id) ON DELETE CASCADE
+);
+-- user_friend_category 用户好友类别表
+CREATE TABLE user_friend_category (
+    user_id INT,
+    category_id INT AUTO_INCREMENT,
+    category_name VARCHAR(255),
+    PRIMARY KEY (category_id),
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
+);
+-- user_friend_application 用户好友申请表
+CREATE TABLE user_friend_application (
+    user_id INT,
+    friend_id INT,
+    category_id INT,
+    PRIMARY KEY (user_id, friend_id),
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id) ON DELETE CASCADE
 );
 -- user_favorite_merchant 用户商户收藏表
 CREATE TABLE user_favorite_merchant (
@@ -164,8 +186,8 @@ CREATE TABLE user_favorite_merchant (
     user_id INT,
     merchant_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id),
-    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id)
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE
 );
 -- user_favorite_product 用户产品收藏表
 CREATE TABLE user_favorite_product (
@@ -173,8 +195,8 @@ CREATE TABLE user_favorite_product (
     user_id INT,
     product_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id),
-    FOREIGN KEY (product_id) REFERENCES merchant_product(product_id)
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES merchant_product(product_id) ON DELETE CASCADE
 );
 
 -- group_info 群组信息表
@@ -192,8 +214,8 @@ CREATE TABLE group_member (
     role VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (group_id, user_id),
-    FOREIGN KEY (group_id) REFERENCES group_info(group_id),
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id)
+    FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
 -- group_history 群组信息历史表
 CREATE TABLE group_history (
@@ -202,7 +224,7 @@ CREATE TABLE group_history (
     action VARCHAR(255),
     details TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (group_id) REFERENCES group_info(group_id)
+    FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE
 );
 
 SET FOREIGN_KEY_CHECKS = 1;

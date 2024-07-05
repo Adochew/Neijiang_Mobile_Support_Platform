@@ -53,8 +53,12 @@ INSERT INTO merchant_promotion (merchant_id, start_date, end_date, details) VALU
 (1, '2024-07-01', '2024-07-31', 'Summer sale 20% off');
 
 -- 插入用户好友数据
-INSERT INTO user_friend (user_id, friend_id) VALUES
-(1, 1);
+INSERT INTO user_friend (user_id, friend_id, category_id) VALUES
+(1, 1, 1);
+
+-- 插入用户好友类别表数据
+INSERT INTO user_friend_category (user_id, category_id, category_name) VALUES
+(1, 1, 'Mate');
 
 -- 插入用户商户收藏数据
 INSERT INTO user_favorite_merchant (user_id, merchant_id) VALUES

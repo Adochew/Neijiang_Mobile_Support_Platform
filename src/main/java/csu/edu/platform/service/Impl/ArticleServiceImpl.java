@@ -65,7 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public Boolean addArticleVO (ArticleVO articleVO) {
-        SystemArticle systemArticle = ArticleVO.parseSystemArticle(articleVO);
+        SystemArticle systemArticle = articleVO.parseSystemArticle();
         return systemArticleMapper.insert(systemArticle) != 0;
     }
 
@@ -74,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public Boolean updateArticleVO (ArticleVO articleVO) {
-        SystemArticle systemArticle = ArticleVO.parseSystemArticle(articleVO);
+        SystemArticle systemArticle = articleVO.parseSystemArticle();
         return systemArticleMapper.updateById(systemArticle) != 0;
     }
 

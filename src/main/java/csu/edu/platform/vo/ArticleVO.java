@@ -28,13 +28,13 @@ public class ArticleVO {
         this.createdAt = systemArticle.getCreatedAt();
     }
 
-    public static SystemArticle parseSystemArticle(ArticleVO articleVO){
+    public SystemArticle parseSystemArticle(){
         SystemArticle systemArticle = new SystemArticle();
-        systemArticle.setArticleId(articleVO.getArticleId());
-        systemArticle.setTitle(articleVO.getTitle());
-        systemArticle.setContent(articleVO.getContent());
-        systemArticle.setCategoryId(articleVO.getCategoryId());
-        systemArticle.setAuthorId(articleVO.getAuthorId());
+        systemArticle.setArticleId(this.getArticleId());
+        systemArticle.setTitle(this.getTitle());
+        systemArticle.setContent(this.getContent());
+        systemArticle.setCategoryId(this.getCategoryId());
+        systemArticle.setAuthorId(this.getAuthorId());
         return systemArticle;
     }
 }
