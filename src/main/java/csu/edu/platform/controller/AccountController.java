@@ -29,6 +29,11 @@ public class AccountController {
     private ResponseEntity<Object> test1(){
         return ResponseUtil.error("message", HttpStatus.UNAUTHORIZED);
     }
+    @GetMapping("/example")
+    public String example(@RequestAttribute("accountId") Integer accountId,
+                          @RequestAttribute("roleId") Integer roleId) {
+        return null;
+    }
 
     @PostMapping("/token")
     private ResponseEntity<Object> login(@RequestBody SystemAccount systemAccount){

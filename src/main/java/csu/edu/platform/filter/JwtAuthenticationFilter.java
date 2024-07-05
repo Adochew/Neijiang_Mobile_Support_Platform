@@ -35,16 +35,17 @@ public class JwtAuthenticationFilter implements Filter {
             sendErrorResponse(response, "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
             return;
         }
-
         Claims claims = JWTUtil.parseJWT(jwt);
         if (claims == null) {
             sendErrorResponse(response, "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
             return;
         }
 
-//        String username = (String) claims.get("username");
-//        servletRequest.setAttribute("username", username);
-//        filterChain.doFilter(servletRequest, servletResponse);
+        Integer accountId = (Integer) claims.get("accountId");
+        Integer roleId = (Integer) claims.get("roleId");
+        servletRequest.setAttribute("accountId", accountId);
+        servletRequest.setAttribute("roleId", roleId);
+        filterChain.doFilter(servletRequest,servletResponse);
     }
 
     private void sendErrorResponse(HttpServletResponse response, String message, HttpStatus status) throws IOException {
