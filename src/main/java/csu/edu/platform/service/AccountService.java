@@ -13,6 +13,7 @@ public interface AccountService {
     Boolean addSystemAccount(SystemAccount systemAccount);
     Boolean updateSystemAccount(SystemAccount systemAccount);
     Boolean deleteSystemAccount(Integer accountId);
+    SystemAccount getSystemAccountByUsername(String username);
 }
 
 

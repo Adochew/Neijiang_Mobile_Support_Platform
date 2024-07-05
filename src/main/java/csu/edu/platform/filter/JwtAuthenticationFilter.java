@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String url = request.getRequestURL().toString();
 
-        if (url.contains("token")){
+        if (url.contains("token")||url.contains("account")){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }

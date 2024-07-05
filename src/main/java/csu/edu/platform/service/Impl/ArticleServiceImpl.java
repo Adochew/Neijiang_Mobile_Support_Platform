@@ -88,6 +88,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public Boolean deleteArticleCategory (Integer articleCategoryId) {
+        for(ArticleVO articleVO:getArticleVOListByCategoryId(articleCategoryId)){
+            deleteArticleVO(articleVO.getArticleId());
+        }
         return systemArticleCategoryMapper.deleteById(articleCategoryId) != 0;
     }
 
