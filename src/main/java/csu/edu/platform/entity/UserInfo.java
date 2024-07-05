@@ -13,8 +13,6 @@ public class UserInfo {
     @TableId(value = "user_id", type = IdType.AUTO)
     private Integer userId;
     private Integer accountId;
-    private String username;
-    private String password;
     private String name;
     private String email;
     private String phone;
