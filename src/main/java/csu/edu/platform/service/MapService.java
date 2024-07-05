@@ -1,6 +1,8 @@
 package csu.edu.platform.service;
 
+import java.util.Map;
+
 public abstract interface MapService {
-    String  getLocationFromCoordinates(String longitude, String latitude);
+    Map<String, String> getLocationFromCoordinates(String longitude, String latitude);
     String getLonAndLatByAddress(String address);
 }

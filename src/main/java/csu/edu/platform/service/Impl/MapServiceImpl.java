@@ -13,11 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service("mapService")
 public class MapServiceImpl implements MapService {
-
-    public   String getLocationFromCoordinates(String longitude, String latitude) {
+    public  Map<String, String> getLocationFromCoordinates(String longitude, String latitude) {
         // https://lbs.amap.com/api/webservice/summary(逆地理编码)
         String apiKey = "d47fd475d02fa9afb96305b43a0fa7b6";  // 请替换成您的高德地图API密钥
         String url = "https://restapi.amap.com/v3/geocode/regeo?key=" + apiKey + "&location=" + longitude + "," + latitude;
@@ -54,11 +55,18 @@ public class MapServiceImpl implements MapService {
             throw new RuntimeException(e);
         }
         JSONObject jsonObject = JSONObject.parseObject(response.toString());
-        JSONObject addressComponent = jsonObject.getJSONObject("regeocode").getJSONObject("addressComponent");
-        String province = addressComponent.getString("province"); // 省份
-        String city = addressComponent.getString("city");         // 城市
-        String district = addressComponent.getString("district"); // 区县
-        return province + " " + city + " " + district;  // 返回完整的地址信息
+        JSONObject regeocode = jsonObject.getJSONObject("regeocode");
+        JSONObject addressComponent = regeocode.getJSONObject("addressComponent");
+
+        // 封装地址信息到Map中
+        Map<String, String> addressMap = new HashMap<>();
+        addressMap.put("province", addressComponent.getString("province"));
+        addressMap.put("city", addressComponent.getString("city"));
+        addressMap.put("district", addressComponent.getString("district"));
+        addressMap.put("township", addressComponent.getString("township"));
+        addressMap.put("street", addressComponent.getJSONObject("streetNumber").getString("street"));
+        addressMap.put("streetNumber", addressComponent.getJSONObject("streetNumber").getString("number"));
+        return addressMap;
     }
     public String getLonAndLatByAddress(String address){
         String KEY="d47fd475d02fa9afb96305b43a0fa7b6";
