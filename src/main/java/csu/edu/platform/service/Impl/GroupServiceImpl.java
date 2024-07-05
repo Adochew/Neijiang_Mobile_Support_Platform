@@ -70,12 +70,12 @@ public class GroupServiceImpl implements GroupService {
         return groupMemberMapper.delete(queryWrapper) != 0;
     }
 
-    List<GroupHistory> getGroupHistoryByGroupId(Integer groupId) {
+    public List<GroupHistory> getGroupHistoryByGroupId(Integer groupId) {
         QueryWrapper<GroupHistory> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("group_id", groupId);
         return groupHistoryMapper.selectList(queryWrapper);
     }
-    Boolean addGroupHistory(GroupHistory groupHistory) {
+    public Boolean addGroupHistory(GroupHistory groupHistory) {
         return groupHistoryMapper.insert(groupHistory) != 0;
     }
 }
