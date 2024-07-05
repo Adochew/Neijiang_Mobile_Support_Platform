@@ -25,10 +25,10 @@ public class JwtAuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String url = request.getRequestURL().toString();
 
-//        if (url.contains("no-jwt")){
-//            filterChain.doFilter(servletRequest,servletResponse);
-//            return;
-//        }
+        if (url.contains("token")){
+            filterChain.doFilter(servletRequest,servletResponse);
+            return;
+        }
 
         String jwt = request.getHeader("token");
         if (jwt == null || jwt.isEmpty()) {

@@ -12,11 +12,11 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SystemAccountMapper systemAccountMapper;
 
-    private SystemAccount getSystemAccountByAccountId(int accountId) {
+    public SystemAccount getSystemAccountByAccountId(int accountId) {
         return systemAccountMapper.selectById(accountId);
     }
 
-    private SystemAccount getSystemAccountByUsernameAndPassword(String username, String password) {
+    public SystemAccount getSystemAccountByUsernameAndPassword(String username, String password) {
         QueryWrapper<SystemAccount> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username).eq("password",password);
         return systemAccountMapper.selectOne(queryWrapper);
