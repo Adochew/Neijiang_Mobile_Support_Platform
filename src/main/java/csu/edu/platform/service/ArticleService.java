@@ -9,6 +9,7 @@ public interface ArticleService {
     ArticleVO getArticleVOByArticleId(int articleId);
     List<ArticleVO> getArticleVOList();
     List<ArticleVO> getArticleVOListByAuthorId(int authorId);
+    List<ArticleVO> getArticleVOListByCategoryId(int categoryId);
     Boolean addArticleVO (ArticleVO articleVO);
     Boolean deleteArticleVO (Integer articleId);
     Boolean updateArticleVO (ArticleVO articleVO);

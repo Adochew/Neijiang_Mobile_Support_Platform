@@ -51,6 +51,19 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVOList;
     }
 
+    public List<ArticleVO> getArticleVOListByCategoryId(int categoryId) {
+        QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category_id", categoryId);
+        List<SystemArticle> systemArticles = systemArticleMapper.selectList(queryWrapper);
+        SystemArticleCategory systemArticleCategory = systemArticleCategoryMapper.selectById(categoryId);
+        List<ArticleVO> articleVOList = new ArrayList<>();
+        for (SystemArticle systemArticle : systemArticles) {
+            ArticleVO articleVO = new ArticleVO(systemArticle, systemArticleCategory);
+            articleVOList.add(articleVO);
+        }
+        return articleVOList;
+    }
+
     public Boolean addArticleVO (ArticleVO articleVO) {
         SystemArticle systemArticle = ArticleVO.parseSystemArticle(articleVO);
         return systemArticleMapper.insert(systemArticle) != 0;
