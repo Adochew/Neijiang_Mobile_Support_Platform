@@ -1,10 +1,12 @@
 package csu.edu.platform.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 public class MerchantVO {
     private Integer merchantId;
     private Integer ownerId;
