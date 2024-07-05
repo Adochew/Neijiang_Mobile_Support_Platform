@@ -16,10 +16,6 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private SystemAccountMapper systemAccountMapper;
-    @Autowired
-    private UserInfoMapper userInfoMapper;
-    @Autowired
-    private MerchantInfoMapper merchantInfoMapper;
 
     public SystemAccount getSystemAccountByAccountId(int accountId) {
         return systemAccountMapper.selectById(accountId);
@@ -28,6 +24,12 @@ public class AccountServiceImpl implements AccountService {
     public SystemAccount getSystemAccountByUsernameAndPassword(String username, String password) {
         QueryWrapper<SystemAccount> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username).eq("password",password);
+        return systemAccountMapper.selectOne(queryWrapper);
+    }
+
+    public SystemAccount getSystemAccountByUsername(String username){
+        QueryWrapper<SystemAccount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
         return systemAccountMapper.selectOne(queryWrapper);
     }
 
@@ -59,10 +61,5 @@ public class AccountServiceImpl implements AccountService {
 
     public Boolean deleteSystemAccount(Integer accountId) {
         return systemAccountMapper.deleteById(accountId) != 0;
-    }
-    public SystemAccount getSystemAccountByUsername(String username){
-        QueryWrapper<SystemAccount> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", username);
-        return systemAccountMapper.selectOne(queryWrapper);
     }
 }

@@ -61,7 +61,7 @@ CREATE TABLE system_article (
     category_id INT,
     author_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES system_article_category(category_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES system_article_category(category_id),
     FOREIGN KEY (author_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
 -- system_article_category 系统文章类别表（预留）
@@ -97,7 +97,7 @@ CREATE TABLE merchant_product (
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES merchant_product_category(category_id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES merchant_product_category(category_id)
 );
 -- merchant_category 商户类别表（预留）
 CREATE TABLE merchant_category (
@@ -160,7 +160,7 @@ CREATE TABLE user_friend (
     PRIMARY KEY (user_id, friend_id),
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id)
 );
 -- user_friend_category 用户好友类别表
 CREATE TABLE user_friend_category (
@@ -178,7 +178,7 @@ CREATE TABLE user_friend_application (
     PRIMARY KEY (user_id, friend_id),
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id)
 );
 -- user_favorite_merchant 用户商户收藏表
 CREATE TABLE user_favorite_merchant (

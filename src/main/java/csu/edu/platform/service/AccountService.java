@@ -7,13 +7,13 @@ import java.util.List;
 public interface AccountService {
     SystemAccount getSystemAccountByAccountId(int accountId);
     SystemAccount getSystemAccountByUsernameAndPassword(String username, String password);
+    SystemAccount getSystemAccountByUsername(String username);
     List<SystemAccount> getSystemAccountListByKeyword(String keyword);
     List<SystemAccount> getSystemAccountList();
     List<SystemAccount> getSystemAccountListByRoleId(int roleId);
     Boolean addSystemAccount(SystemAccount systemAccount);
     Boolean updateSystemAccount(SystemAccount systemAccount);
     Boolean deleteSystemAccount(Integer accountId);
-    SystemAccount getSystemAccountByUsername(String username);
 }
 
 
