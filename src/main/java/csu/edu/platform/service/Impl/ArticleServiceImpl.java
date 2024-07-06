@@ -20,7 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private SystemArticleCategoryMapper systemArticleCategoryMapper;
 
-    public ArticleVO getArticleVOByArticleId(int articleId) {
+    public ArticleVO getArticleVOByArticleId(Integer articleId) {
         SystemArticle systemArticle = systemArticleMapper.selectById(articleId);
         SystemArticleCategory systemArticleCategory = systemArticleCategoryMapper.selectById(articleId);
         if (systemArticleCategory == null) {
@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVOList;
     }
-    public List<ArticleVO> getArticleVOListByAuthorId(int authorId) {
+    public List<ArticleVO> getArticleVOListByAuthorId(Integer authorId) {
         QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_id", authorId);
         List<SystemArticle> systemArticles = systemArticleMapper.selectList(queryWrapper);
@@ -48,7 +48,19 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVOList;
     }
-    public List<ArticleVO> getArticleVOListByCategoryId(int categoryId) {
+    public List<ArticleVO> getArticleVOListByKeyword(String keyword) {
+        QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("title", keyword);
+        List<SystemArticle> systemArticles = systemArticleMapper.selectList(queryWrapper);
+        List<ArticleVO> articleVOList = new ArrayList<>();
+        for (SystemArticle systemArticle : systemArticles) {
+            SystemArticleCategory systemArticleCategory = systemArticleCategoryMapper.selectById(systemArticle.getArticleId());
+            ArticleVO articleVO = getArticleVOByArticleId(systemArticle.getArticleId());
+            articleVOList.add(articleVO);
+        }
+        return articleVOList;
+    }
+    public List<ArticleVO> getArticleVOListByCategoryId(Integer categoryId) {
         QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id", categoryId);
         List<SystemArticle> systemArticles = systemArticleMapper.selectList(queryWrapper);

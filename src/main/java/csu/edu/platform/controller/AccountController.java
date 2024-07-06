@@ -1,5 +1,6 @@
 package csu.edu.platform.controller;
 
+import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.SystemAccount;
 import csu.edu.platform.entity.UserInfo;
 import csu.edu.platform.service.AccountService;
@@ -72,17 +73,13 @@ public class AccountController {
     }
 
     /**
-     * 获取所有账户信息的接口，只有管理员角色（roleId为1）可以访问。
-     * @param roleId 从请求属性中获取的角色ID
-     * @return 所有系统账户的信息或权限不足的错误信息
+     * 获取所有账户信息的接口。
+     * @return 所有系统账户的信息。
      */
     @GetMapping("")
-    public ResponseEntity<Object> getAllAccounts(@RequestAttribute Integer roleId) {
-        if (roleId == 1) {
+    @RoleRequired({1})
+    public ResponseEntity<Object> getAllAccounts() {
             return ResponseUtil.success(accountService.getSystemAccountList());
-        } else {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
     }
 
     /**

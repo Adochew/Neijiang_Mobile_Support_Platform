@@ -1,5 +1,6 @@
 package csu.edu.platform.controller;
 
+import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.SystemArticleCategory;
 import csu.edu.platform.service.ArticleService;
 import csu.edu.platform.util.ResponseUtil;
@@ -22,6 +23,26 @@ public class ArticleController {
     @GetMapping("")
     public ResponseEntity<Object> getAllArticles() {
         return ResponseUtil.success(articleService.getArticleVOList());
+    }
+
+    /**
+     * 根据分类ID获取文章的接口。
+     * @param articleId 文章ID。
+     * @return 指定ID的文章。
+     */
+    @GetMapping("/{articleId}")
+    public ResponseEntity<Object> getArticleByArticleId(@PathVariable int articleId) {
+        return ResponseUtil.success(articleService.getArticleVOByArticleId(articleId));
+    }
+
+    /**
+     * 根据关键词获取文章的接口。
+     * @param keyword 文章标题关键词。
+     * @return 指定的文章列表。
+     */
+    @PostMapping("/search")
+    public ResponseEntity<Object> searchArticle(@RequestBody String keyword) {
+        return ResponseUtil.success(articleService.getArticleVOListByKeyword(keyword));
     }
 
     /**
@@ -50,12 +71,8 @@ public class ArticleController {
      * @return 成功或失败的消息。
      */
     @PostMapping("")
-    public ResponseEntity<Object> addArticle(@RequestBody ArticleVO articleVO,
-                                             @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> addArticle(@RequestBody ArticleVO articleVO) {
         if (articleService.addArticleInfo(articleVO)) {
             return ResponseUtil.success("Article added successfully.");
         } else {
@@ -69,12 +86,8 @@ public class ArticleController {
      * @return 成功或失败的消息。
      */
     @PutMapping("")
-    public ResponseEntity<Object> updateArticle(@RequestBody ArticleVO articleVO,
-                                                @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> updateArticle(@RequestBody ArticleVO articleVO) {
         if (articleService.updateArticleInfo(articleVO)) {
             return ResponseUtil.success("Article updated successfully.");
         } else {
@@ -88,12 +101,8 @@ public class ArticleController {
      * @return 成功或失败的消息。
      */
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<Object> deleteArticle(@PathVariable Integer articleId,
-                                                @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> deleteArticle(@PathVariable Integer articleId) {
         if (articleService.deleteArticleInfo(articleId)) {
             return ResponseUtil.success("Article deleted successfully.");
         } else {
@@ -102,17 +111,22 @@ public class ArticleController {
     }
 
     /**
+     * 获取所有文章分类的接口。
+     * @return 所有文章分类。
+     */
+    @GetMapping("/categories")
+    public ResponseEntity<Object> getArticleCategories() {
+        return ResponseUtil.success(articleService.getArticleCategoryList());
+    }
+
+    /**
      * 添加文章分类的接口。
      * @param articleCategory 包含分类信息的SystemArticleCategory对象。
      * @return 成功或失败的消息。
      */
     @PostMapping("/categories")
-    public ResponseEntity<Object> addArticleCategory(@RequestBody SystemArticleCategory articleCategory,
-                                                     @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> addArticleCategory(@RequestBody SystemArticleCategory articleCategory) {
         if (articleService.addArticleCategory(articleCategory)) {
             return ResponseUtil.success("Category added successfully.");
         } else {
@@ -126,12 +140,8 @@ public class ArticleController {
      * @return 成功或失败的消息。
      */
     @PutMapping("/categories")
-    public ResponseEntity<Object> updateArticleCategory(@RequestBody SystemArticleCategory articleCategory,
-                                                        @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> updateArticleCategory(@RequestBody SystemArticleCategory articleCategory) {
         if (articleService.updateArticleCategory(articleCategory)) {
             return ResponseUtil.success("Category updated successfully.");
         } else {
@@ -145,12 +155,8 @@ public class ArticleController {
      * @return 成功或失败的消息。
      */
     @DeleteMapping("/categories/{categoryId}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable int categoryId,
-                                                 @RequestAttribute Integer roleId) {
-        if (roleId != 1){
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({1})
+    public ResponseEntity<Object> deleteCategory(@PathVariable int categoryId) {
         if (articleService.deleteArticleCategory(categoryId)) {
             return ResponseUtil.success("Category deleted successfully.");
         } else {

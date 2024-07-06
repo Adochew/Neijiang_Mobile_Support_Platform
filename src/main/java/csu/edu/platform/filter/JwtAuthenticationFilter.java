@@ -43,7 +43,6 @@ public class JwtAuthenticationFilter implements Filter {
 
         Integer accountId = (Integer) claims.get("accountId");
         Integer roleId = (Integer) claims.get("roleId");
-        System.out.println(accountId);
         servletRequest.setAttribute("accountId", accountId);
         servletRequest.setAttribute("roleId", roleId);
         filterChain.doFilter(servletRequest,servletResponse);

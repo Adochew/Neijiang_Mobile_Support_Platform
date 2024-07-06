@@ -1,5 +1,6 @@
 package csu.edu.platform.controller;
 
+import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.MerchantComment;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantProductComment;
@@ -32,12 +33,8 @@ public class CommentController {
     }
 
     @PostMapping("/merchant_comments")
-    public ResponseEntity<Object> addMerchantComment(@RequestBody MerchantComment merchantComment,
-                                                     @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> addMerchantComment(@RequestBody MerchantComment merchantComment) {
         if (commentService.addMerchantComment(merchantComment)) {
             return ResponseUtil.success("Merchant comment added.");
         } else {
@@ -46,12 +43,8 @@ public class CommentController {
     }
 
     @PutMapping("/merchant_comments")
-    public ResponseEntity<Object> updateMerchantComment(@RequestBody MerchantComment merchantComment,
-                                                        @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> updateMerchantComment(@RequestBody MerchantComment merchantComment) {
         if (commentService.updateMerchantComment(merchantComment)) {
             return ResponseUtil.success("Merchant comment updated.");
         } else {
@@ -60,12 +53,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/merchant_comments/{commentId}")
-    public ResponseEntity<Object> deleteMerchantComment(@PathVariable Integer commentId,
-                                                        @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> deleteMerchantComment(@PathVariable Integer commentId) {
         if (commentService.deleteMerchantComment(commentId)){
             return ResponseUtil.success("Merchant comment deleted.");
         } else {
@@ -89,12 +78,8 @@ public class CommentController {
     }
 
     @PostMapping("/product_comments")
-    public ResponseEntity<Object> addMerchantProductComment(@RequestBody MerchantProductComment merchantProductComment,
-                                                            @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> addMerchantProductComment(@RequestBody MerchantProductComment merchantProductComment) {
         if (commentService.addMerchantProductComment(merchantProductComment)){
             return ResponseUtil.success("Merchant product comment added.");
         } else {
@@ -103,12 +88,8 @@ public class CommentController {
     }
 
     @PutMapping("/product_comments")
-    public ResponseEntity<Object> updateMerchantProductComment(@RequestBody MerchantProductComment merchantProductComment,
-                                                               @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> updateMerchantProductComment(@RequestBody MerchantProductComment merchantProductComment) {
         if (commentService.updateMerchantProductComment(merchantProductComment)) {
             return ResponseUtil.success("Merchant product comment updated.");
         } else {
@@ -117,12 +98,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/product_comments/{commentId}")
-    public ResponseEntity<Object> deleteMerchantProductComment(@PathVariable Integer commentId,
-                                                               @RequestAttribute Integer roleId) {
-        if (roleId != 1) {
-            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
-        }
-
+    @RoleRequired({3})
+    public ResponseEntity<Object> deleteMerchantProductComment(@PathVariable Integer commentId) {
         if (commentService.deleteMerchantProductComment(commentId)){
             return ResponseUtil.success("Merchant product comment deleted.");
         } else {

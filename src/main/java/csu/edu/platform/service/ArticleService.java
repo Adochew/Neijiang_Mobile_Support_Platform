@@ -6,10 +6,11 @@ import csu.edu.platform.vo.ArticleVO;
 import java.util.List;
 
 public interface ArticleService {
-    ArticleVO getArticleVOByArticleId(int articleId);
+    ArticleVO getArticleVOByArticleId(Integer articleId);
     List<ArticleVO> getArticleVOList();
-    List<ArticleVO> getArticleVOListByAuthorId(int authorId);
-    List<ArticleVO> getArticleVOListByCategoryId(int categoryId);
+    List<ArticleVO> getArticleVOListByAuthorId(Integer authorId);
+    List<ArticleVO> getArticleVOListByKeyword(String keyword);
+    List<ArticleVO> getArticleVOListByCategoryId(Integer categoryId);
     Boolean addArticleInfo (ArticleVO articleVO);
     Boolean updateArticleInfo (ArticleVO articleVO);
     Boolean deleteArticleInfo (Integer articleId);
