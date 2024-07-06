@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Boolean addSystemAccount(SystemAccount systemAccount) {
-        return systemAccountMapper.insert(systemAccount)!=0;
+        return systemAccountMapper.insert(systemAccount) != 0;
     }
 
     public Boolean updateSystemAccount(SystemAccount systemAccount) {

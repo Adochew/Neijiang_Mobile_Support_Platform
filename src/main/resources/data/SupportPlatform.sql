@@ -143,7 +143,7 @@ CREATE TABLE merchant_product_category (
     category_name VARCHAR(255) NOT NULL
 );
 -- 插入merchant_product_category
-INSERT INTO merchant_product_category  VALUES
+INSERT INTO merchant_product_category (category_id, category_name) VALUES
 (1, '电子产品'),
 (2, '服装'),
 (3, '食品'),
