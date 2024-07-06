@@ -8,7 +8,6 @@ import csu.edu.platform.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,20 +21,6 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private ArticleService articleService;
-
-    @GetMapping("/no-jwt")
-    private ResponseEntity<Object> test(){
-        return ResponseUtil.error("message", HttpStatus.UNAUTHORIZED);
-    }
-    @GetMapping("/test")
-    private ResponseEntity<Object> test1(){
-        return ResponseUtil.error("message", HttpStatus.UNAUTHORIZED);
-    }
-    @GetMapping("/example")
-    public String example(@RequestAttribute("accountId") Integer accountId,
-                          @RequestAttribute("roleId") Integer roleId) {
-        return null;
-    }
 
     @PostMapping("/token")
     public ResponseEntity<Object> login(@RequestBody SystemAccount systemAccount){
@@ -90,6 +75,4 @@ public class AccountController {
     public ResponseEntity<Object> searchArticles(@PathVariable int authorId){
         return ResponseUtil.success(articleService.getArticleVOListByAuthorId(authorId));
     }
-
-
 }

@@ -1,3 +1,4 @@
+drop database support_platform if exists;
 create database support_platform;
 use support_platform;
 
@@ -141,7 +142,6 @@ CREATE TABLE merchant_promotion (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE
 );
-
 -- user_info 用户信息表
 CREATE TABLE user_info (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
