@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductVO> getMerchantProductVOListByMerchantIdAndKeyword(Integer MerchantId, String keyword) {
         QueryWrapper<MerchantProduct> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("merchant_id", MerchantId);
-        queryWrapper.like("productName", keyword);
+        queryWrapper.like("product_name", keyword);
         List<MerchantProduct> merchantProductList = merchantProductMapper.selectList(queryWrapper);
         List<ProductVO> productVOList = new ArrayList<>();
         for (MerchantProduct merchantProduct : merchantProductList) {
