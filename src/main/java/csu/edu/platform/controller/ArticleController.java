@@ -31,7 +31,7 @@ public class ArticleController {
 
     @PostMapping("/articles")
     public ResponseEntity<Object> searchArticles(@RequestBody ArticleVO articleVO){
-        if(articleService.addArticleVO(articleVO))
+        if(articleService.addArticleInfo(articleVO))
             return ResponseUtil.success();
         else return ResponseUtil.error("插入失败", HttpStatus.BAD_REQUEST);
     }
@@ -44,7 +44,7 @@ public class ArticleController {
 
     @PutMapping("/articles")
     public ResponseEntity<Object> updateArticle(@RequestBody ArticleVO articleVO){
-        if(articleService.updateArticleVO(articleVO))
+        if(articleService.updateArticleInfo(articleVO))
             return ResponseUtil.success();
         else return ResponseUtil.error("更新失败");
     }

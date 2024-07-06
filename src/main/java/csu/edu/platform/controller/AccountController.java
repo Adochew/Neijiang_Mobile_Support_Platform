@@ -3,6 +3,7 @@ package csu.edu.platform.controller;
 import csu.edu.platform.entity.SystemAccount;
 import csu.edu.platform.service.AccountService;
 import csu.edu.platform.service.ArticleService;
+import csu.edu.platform.service.UserService;
 import csu.edu.platform.util.JWTUtil;
 import csu.edu.platform.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,13 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private ArticleService articleService;
+    private UserService userService;
 
     @PostMapping("/token")
     public ResponseEntity<Object> login(@RequestBody SystemAccount systemAccount){
         SystemAccount account = accountService.getSystemAccountByUsernameAndPassword(systemAccount.getUsername(), systemAccount.getPassword());
         if(account == null){
-            return ResponseUtil.error("账号不存在", HttpStatus.UNAUTHORIZED);
+            return ResponseUtil.error("Invalid username or password.", HttpStatus.BAD_REQUEST);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("accountId",account.getAccountId());
@@ -36,31 +37,39 @@ public class AccountController {
         return ResponseUtil.success(jwt);
     }
 
-//    @PostMapping("/user")
-//    public ResponseEntity<Object> register(@RequestBody SystemAccount systemAccount){
-//
-//        if(accountService.getSystemAccountByUsername(systemAccount.getUsername()) != null){
-//            return ResponseUtil.error("用户名重复", HttpStatus.UNAUTHORIZED);
+    @PostMapping("/accounts")
+    public ResponseEntity<Object> register(@RequestBody SystemAccount systemAccount){
+        if(accountService.getSystemAccountByAccountId(systemAccount.getAccountId()) != null){
+            return ResponseUtil.error("Account registration failed: Duplicate account ID.", HttpStatus.BAD_REQUEST);
+        }
+
+//        if(systemAccount.getRoleId() == 3){
+//            userService.addUserInfo()
 //        }
-//        accountService.addSystemAccount(systemAccount);
-//            return ResponseUtil.success("注册成功");
-//    }
+
+
+        if (accountService.addSystemAccount(systemAccount)){
+            return ResponseUtil.success("Account registration successful.");
+        }else {
+            return ResponseUtil.error("Account registration failed.", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/accounts")
     public ResponseEntity<Object> getAllAccounts(@RequestAttribute("roleId") Integer roleId){
         if(roleId == 1){
             return ResponseUtil.success(accountService.getSystemAccountList());
         }else {
-            return ResponseUtil.error("Insufficient permissions", HttpStatus.FORBIDDEN);
+            return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
         }
     }
 
     @PutMapping("/accounts")
     public ResponseEntity<Object> updateAccount(@RequestBody SystemAccount systemAccount){
         if(accountService.updateSystemAccount(systemAccount)){
-            return ResponseUtil.success("Account updated successfully");
+            return ResponseUtil.success("Account updated successfully.");
         } else {
-            return ResponseUtil.error("Failed to update account", HttpStatus.BAD_REQUEST);
+            return ResponseUtil.error("Failed to update account.", HttpStatus.BAD_REQUEST);
         }
     }
 
