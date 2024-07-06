@@ -9,7 +9,7 @@ import java.util.List;
 public interface GroupService {
     GroupInfo getGroupInfoByGroupId(Integer groupId);
     List<GroupInfo> getGroupInfoList();
-    List<GroupInfo> getGroupInfoListByUserId(Integer accountId);
+    List<GroupInfo> getGroupInfoListByAccountId(Integer accountId);
     List<GroupInfo> getGroupInfoListByKeyword(String keyword);
     Boolean addGroupInfo(GroupInfo groupInfo);
     Boolean updateGroupInfo(GroupInfo groupInfo);

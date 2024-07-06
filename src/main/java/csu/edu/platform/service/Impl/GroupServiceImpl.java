@@ -29,7 +29,7 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupInfo> getGroupInfoList(){
         return groupInfoMapper.selectList(null);
     }
-    public List<GroupInfo> getGroupInfoListByUserId(Integer accountId){
+    public List<GroupInfo> getGroupInfoListByAccountId(Integer accountId){
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);
         List<GroupMember> groupMembers = groupMemberMapper.selectList(queryWrapper);
