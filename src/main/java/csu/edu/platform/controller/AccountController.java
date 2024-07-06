@@ -115,8 +115,8 @@ public class AccountController {
      * @param keyword 搜索关键词
      * @return 符合关键词的账户信息
      */
-    @GetMapping("/accounts/{keyword}")
-    public ResponseEntity<Object> searchAccount(@PathVariable String keyword) {
+    @PostMapping("/search")
+    public ResponseEntity<Object> searchAccount(@RequestBody String keyword) {
         return ResponseUtil.success(accountService.getSystemAccountListByKeyword(keyword));
     }
 }
