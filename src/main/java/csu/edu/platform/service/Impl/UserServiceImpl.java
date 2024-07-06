@@ -1,6 +1,7 @@
 package csu.edu.platform.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import csu.edu.platform.entity.*;
 import csu.edu.platform.persistence.*;
 import csu.edu.platform.service.UserService;
@@ -121,7 +122,11 @@ public class UserServiceImpl implements UserService {
         return false;
     }
     public Boolean updateUserFriend(UserFriend userFriend) {
-        return userFriendMapper.updateById(userFriend) != 0;
+        UpdateWrapper<UserFriend> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userFriend.getUserId())
+                .eq("friend_id", userFriend.getFriendId())
+                .set("category_id", userFriend.getCategoryId());
+        return userFriendMapper.update(updateWrapper) != 0;
     }
     public Boolean deleteUserFriend(UserFriend userFriend) {
         QueryWrapper<UserFriend> queryWrapper = new QueryWrapper<>();

@@ -254,7 +254,50 @@ public class Test {
         System.out.println(userService.getUserFavoriteProductListByUserId(1)+"\n");
 
         //添加与修改
+        UserInfo userInfo= new UserInfo();
+        userInfo.setAccountId(1);
+        System.out.println(userService.addUserInfo(userInfo)? "用户添加成功" : "用户添加失败");
 
+        userInfo.setAccountId(2);
+        System.out.println(userService.updateUserInfo(userInfo)? "用户修改成功" : "用户修改失败");
+
+        UserFriendCategory userFriendCategory= new UserFriendCategory();
+        userFriendCategory.setCategoryName("test");
+        System.out.println(userService.addUserFriendCategory(userFriendCategory)? "用户好友分类添加成功" : "用户好友分类添加失败");
+
+        userFriendCategory.setCategoryName("test2");
+        System.out.println(userService.updateUserFriendCategory(userFriendCategory)? "用户好友分类修改成功" : "用户好友分类修改失败");
+
+        UserFriendApplication userFriendApplication= new UserFriendApplication();
+        userFriendApplication.setUserId(1);
+        userFriendApplication.setFriendId(5);
+        userFriendApplication.setCategoryId(1);
+        System.out.println(userService.addUserFriendApplication(userFriendApplication)? "用户好友申请添加成功" : "用户好友申请添加失败");
+
+
+        System.out.println(userService.addUserFriend(userFriendApplication)? "用户好友添加成功" : "用户好友添加失败");
+        UserFriend userFriend= new UserFriend();
+        userFriend.setUserId(1);
+        userFriend.setFriendId(5);
+        userFriend.setCategoryId(2);
+        System.out.println(userService.updateUserFriend(userFriend)? "用户好友修改成功" : "用户好友修改失败");
+
+        UserFavoriteMerchant userFavoriteMerchant= new UserFavoriteMerchant();
+        userFavoriteMerchant.setUserId(1);
+        userFavoriteMerchant.setMerchantId(1);
+        System.out.println(userService.addUserFavoriteMerchant(userFavoriteMerchant)? "用户收藏商户添加成功" : "用户收藏商户添加失败");
+
+        UserFavoriteProduct userFavoriteProduct= new UserFavoriteProduct();
+        userFavoriteProduct.setUserId(1);
+        userFavoriteProduct.setProductId(1);
+        System.out.println(userService.addUserFavoriteProduct(userFavoriteProduct)? "用户收藏商品添加成功" : "用户收藏商品添加失败");
+
+        //删除
+        System.out.println(userService.deleteUserInfo(5)? "用户删除成功" : "用户删除失败");
+        System.out.println(userService.deleteUserFriendCategory(9)? "用户好友分类删除成功" : "用户好友分类删除失败");
+        System.out.println(userService.deleteUserFriend(userFriend)? "用户好友删除成功" : "用户好友删除失败");
+        System.out.println(userService.deleteUserFavoriteMerchant(5)? "用户收藏商户删除成功" : "用户收藏商户删除失败");
+        System.out.println(userService.deleteUserFavoriteProduct(5)? "用户收藏商品删除成功" : "用户收藏商品删除失败");
     }
 
 }
