@@ -13,6 +13,7 @@ public class MerchantInfo {
     @TableId(value = "merchant_id", type = IdType.AUTO)
     private Integer merchantId;
     private Integer ownerId;
+    private Integer categoryId;
     private String name;
     private String address;
     private String phone;

@@ -8,6 +8,7 @@ import csu.edu.platform.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,45 +35,43 @@ public class AccountController {
         String jwt = JWTUtil.generateJwt(map);
         return ResponseUtil.success(jwt);
     }
-    @PostMapping("/user")
-    public ResponseEntity<Object> register(@RequestBody SystemAccount systemAccount){
 
-        if(accountService.getSystemAccountByUsername(systemAccount.getUsername()) != null){
-            return ResponseUtil.error("用户名重复", HttpStatus.UNAUTHORIZED);
-        }
-        accountService.addSystemAccount(systemAccount);
-            return ResponseUtil.success("注册成功");
-    }
+//    @PostMapping("/user")
+//    public ResponseEntity<Object> register(@RequestBody SystemAccount systemAccount){
+//
+//        if(accountService.getSystemAccountByUsername(systemAccount.getUsername()) != null){
+//            return ResponseUtil.error("用户名重复", HttpStatus.UNAUTHORIZED);
+//        }
+//        accountService.addSystemAccount(systemAccount);
+//            return ResponseUtil.success("注册成功");
+//    }
 
     @GetMapping("/accounts")
-    public ResponseEntity<Object> getAllAccounts(){
-        return ResponseUtil.success(accountService.getSystemAccountList());
+    public ResponseEntity<Object> getAllAccounts(@RequestAttribute("roleId") Integer roleId){
+        if(roleId == 1){
+            return ResponseUtil.success(accountService.getSystemAccountList());
+        }else {
+            return ResponseUtil.error("Insufficient permissions", HttpStatus.FORBIDDEN);
+        }
     }
+
     @PutMapping("/accounts")
     public ResponseEntity<Object> updateAccount(@RequestBody SystemAccount systemAccount){
-        return ResponseUtil.success(accountService.updateSystemAccount(systemAccount));
+        if(accountService.updateSystemAccount(systemAccount)){
+            return ResponseUtil.success("Account updated successfully");
+        } else {
+            return ResponseUtil.error("Failed to update account", HttpStatus.BAD_REQUEST);
+        }
     }
-   /* todo
-      @DeleteMapping("/accounts/{id}")
-    public ResponseEntity<Object> deleteAccount(@PathVariable int id){
 
-
-    }*/
-    @GetMapping("/users")
-    public ResponseEntity<Object> getAllUsers(){
-        return ResponseUtil.success(accountService.getSystemAccountListByRoleId(3));
-    }
-    @GetMapping("/merchants")
-    public ResponseEntity<Object> getAllMerchants(){
-        return ResponseUtil.success(accountService.getSystemAccountListByRoleId(2));
-    }
+//    TODO
+//    @DeleteMapping("/accounts/{id}")
+//    public ResponseEntity<Object> deleteAccount(@PathVariable int id){
+//
+//    }
 
     @GetMapping("/accounts/{keyword}")
     public ResponseEntity<Object> searchAccount(@PathVariable String keyword){
         return ResponseUtil.success(accountService.getSystemAccountListByKeyword(keyword));
-    }
-    @GetMapping("/articles/{authorId}")
-    public ResponseEntity<Object> searchArticles(@PathVariable int authorId){
-        return ResponseUtil.success(articleService.getArticleVOListByAuthorId(authorId));
     }
 }

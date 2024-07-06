@@ -33,7 +33,7 @@ public class ArticleController {
     public ResponseEntity<Object> searchArticles(@RequestBody ArticleVO articleVO){
         if(articleService.addArticleVO(articleVO))
             return ResponseUtil.success();
-        else return ResponseUtil.error("插入失败");
+        else return ResponseUtil.error("插入失败", HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/articles/{categoryId}")
     public ResponseEntity<Object> deleteCategory(@PathVariable int categoryId){
@@ -41,18 +41,21 @@ public class ArticleController {
             return ResponseUtil.success();
         else return ResponseUtil.error("删除失败");
     }
+
     @PutMapping("/articles")
     public ResponseEntity<Object> updateArticle(@RequestBody ArticleVO articleVO){
         if(articleService.updateArticleVO(articleVO))
             return ResponseUtil.success();
         else return ResponseUtil.error("更新失败");
     }
+
     @PostMapping("/categories")
     public ResponseEntity<Object> addArticlesCategory(@RequestBody SystemArticleCategory articleCategory){
         if(articleService.addArticleCategory(articleCategory))
             return ResponseUtil.success();
         else return ResponseUtil.error("插入失败");
     }
+
     @PutMapping("/categories")
     public ResponseEntity<Object> updateArticle(@RequestBody SystemArticleCategory articleCategory){
         if(articleService.updateArticleCategory(articleCategory))

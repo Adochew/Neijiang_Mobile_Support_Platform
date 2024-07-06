@@ -29,9 +29,9 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupInfo> getGroupInfoList(){
         return groupInfoMapper.selectList(null);
     }
-    public List<GroupInfo> getGroupInfoListByUserId(Integer userId){
+    public List<GroupInfo> getGroupInfoListByUserId(Integer accountId){
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("account_id", accountId);
         List<GroupMember> groupMembers = groupMemberMapper.selectList(queryWrapper);
         List<GroupInfo> groupInfoList = new ArrayList<>();
         for(GroupMember groupMember : groupMembers){
@@ -63,10 +63,10 @@ public class GroupServiceImpl implements GroupService {
     public Boolean addGroupMember(GroupMember groupMember) {
         return groupMemberMapper.insert(groupMember) != 0;
     }
-    public Boolean deleteGroupMember(Integer groupId, Integer userId) {
+    public Boolean deleteGroupMember(Integer groupId, Integer accountId) {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("group_id", groupId);
-        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("account_id", accountId);
         return groupMemberMapper.delete(queryWrapper) != 0;
     }
 

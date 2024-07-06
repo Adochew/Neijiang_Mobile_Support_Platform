@@ -41,7 +41,7 @@ CREATE TABLE system_account (
     password VARCHAR(255) NOT NULL,
     role_id INT NOT NULL
 );
-\! echo 插入system_account
+-- 插入system_account
 INSERT INTO system_account (account_id, username, password, role_id) VALUES
 (1, '管理员', 'admin', 1),
 (2, '商户一', '1234', 2),
@@ -62,7 +62,7 @@ CREATE TABLE system_article (
     FOREIGN KEY (category_id) REFERENCES system_article_category(category_id),
     FOREIGN KEY (author_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
-\! echo 插入system_article
+-- 插入system_article
 INSERT INTO system_article (title, content, category_id, author_id) VALUES
 ('2024年技术趋势', '关于2024年技术趋势的内容', 1, 1),
 ('瑜伽的健康益处', '关于瑜伽的内容', 2, 1),
@@ -74,7 +74,7 @@ CREATE TABLE system_article_category (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(255) NOT NULL
 );
-\! echo 插入system_article_category
+-- 插入system_article_category
 INSERT INTO system_article_category (category_name) VALUES
 ('技术'),
 ('健康'),
@@ -85,6 +85,7 @@ INSERT INTO system_article_category (category_name) VALUES
 CREATE TABLE merchant_info (
     merchant_id INT PRIMARY KEY AUTO_INCREMENT,
     owner_id INT NOT NULL,
+    category_id INT,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
@@ -92,13 +93,12 @@ CREATE TABLE merchant_info (
     business_type VARCHAR(255),
     business_environment VARCHAR(255),
     business_location VARCHAR(255),
-    category_id INT,
     product_category VARCHAR(255),
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
-\! echo 插入merchant_info
+-- 插入merchant_info
 INSERT INTO merchant_info (merchant_id, owner_id, name, address, phone, email, category_id, business_type, business_environment, business_location, product_category, image_url) VALUES
 (1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'image1.jpg'),
 (2, 3, '商户二', '上海市浦东新区', '0987654321', 'merchant2@example.com', 2, '餐饮', '线下', '中国', '食品', 'image2.jpg'),
@@ -119,7 +119,7 @@ CREATE TABLE merchant_product (
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES merchant_product_category(category_id)
 );
-\! echo 插入merchant_product
+-- 插入merchant_product
 INSERT INTO merchant_product (merchant_id, product_name, category_id, price, description, image_url) VALUES
 (1, '笔记本电脑', 1, 5000.00, '高性能笔记本电脑', 'laptop.jpg'),
 (1, '智能手机', 1, 3000.00, '最新智能手机', 'smartphone.jpg'),
@@ -131,7 +131,7 @@ CREATE TABLE merchant_category (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(255) NOT NULL
 );
-\! echo 插入merchant_category
+-- 插入merchant_category
 INSERT INTO merchant_category (category_id, category_name) VALUES
 (1, '零售'),
 (2, '餐饮'),
@@ -142,7 +142,7 @@ CREATE TABLE merchant_product_category (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(255) NOT NULL
 );
-\! echo 插入merchant_product_category
+-- 插入merchant_product_category
 INSERT INTO merchant_product_category (category_name) VALUES
 (1, '电子产品'),
 (2, '服装'),
@@ -160,7 +160,7 @@ CREATE TABLE merchant_comment (
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
-\! echo 插入merchant_comment
+-- 插入merchant_comment
 INSERT INTO merchant_comment (merchant_id, user_id, content, rating) VALUES
 (1, 1, '非常好的商户！', 5),
 (1, 2, '服务态度很好', 4),
@@ -178,7 +178,7 @@ CREATE TABLE merchant_product_comment (
     FOREIGN KEY (product_id) REFERENCES merchant_product(product_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
-\! echo 插入merchant_product_comment
+-- 插入merchant_product_comment
 INSERT INTO merchant_product_comment (product_id, user_id, content, rating) VALUES
 (1, 1, '这台笔记本电脑非常好用！', 5),
 (1, 2, '智能手机功能很强大', 4),
@@ -195,7 +195,7 @@ CREATE TABLE merchant_promotion (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE
 );
-\! echo 插入merchant_promotion
+-- 插入merchant_promotion
 INSERT INTO merchant_promotion (merchant_id, start_date, end_date, details) VALUES
 (1, '2024-01-01', '2024-01-31', '新年促销活动'),
 (2, '2024-02-01', '2024-02-28', '春节特惠'),
@@ -212,7 +212,7 @@ CREATE TABLE user_info (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (account_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
-\! echo 插入user_info
+-- 插入user_info
 INSERT INTO user_info (account_id, name, email, phone) VALUES
 (3, '用户一', 'user1@example.com', '0987654321'),
 (4, '用户二', 'user2@example.com', '1234567890'),
@@ -229,7 +229,7 @@ CREATE TABLE user_friend (
     FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id)
 );
-\! echo 插入user_friend
+-- 插入user_friend
 INSERT INTO user_friend (user_id, friend_id, category_id) VALUES
 (1, 2, 1),
 (2, 1 ,1),
@@ -246,7 +246,7 @@ CREATE TABLE user_friend_category (
     category_name VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
-\! echo 插入user_friend_category
+-- 插入user_friend_category
 INSERT INTO user_friend_category (category_id, user_id, category_name) VALUES
 (1, 1, '好友'),
 (2, 1, '饭友'),
@@ -268,7 +268,7 @@ CREATE TABLE user_friend_application (
     FOREIGN KEY (friend_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES user_friend_category(category_id)
 );
-\! echo 插入user_friend_application
+-- 插入user_friend_application
 INSERT INTO user_friend_application (user_id, friend_id, category_id) VALUES
 (1, 2, 1),
 (1, 3, 2),
@@ -284,7 +284,7 @@ CREATE TABLE user_favorite_merchant (
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (merchant_id) REFERENCES merchant_info(merchant_id) ON DELETE CASCADE
 );
-\! echo 插入user_favorite_merchant
+-- 插入user_favorite_merchant
 INSERT INTO user_favorite_merchant (user_id, merchant_id) VALUES
 (1, 1),
 (1, 2),
@@ -300,7 +300,7 @@ CREATE TABLE user_favorite_product (
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES merchant_product(product_id) ON DELETE CASCADE
 );
-\! echo 插入user_favorite_product
+-- 插入user_favorite_product
 INSERT INTO user_favorite_product (user_id, product_id) VALUES
 (1, 1),
 (1, 2),
@@ -315,7 +315,7 @@ CREATE TABLE group_info (
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-\! echo 插入group_info
+-- 插入group_info
 INSERT INTO group_info (group_id, group_name, description, image_url) VALUES
 (1, '饭友群', '饭友交流讨论群', 'eat_group.jpg'),
 (2, '零售折扣群', '通知零售店打折信息', 'group.jpg');
@@ -331,7 +331,7 @@ CREATE TABLE group_member (
     FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE,
     FOREIGN KEY (account_id) REFERENCES system_account(account_id)  ON DELETE CASCADE
 );
-\! echo 插入group_member
+-- 插入group_member
 INSERT INTO group_member (group_id, account_id, role) VALUES
 (1, 2, '管理员'),
 (1, 4, '成员'),
@@ -347,7 +347,7 @@ CREATE TABLE group_history (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE
 );
-\! echo 插入group_history
+-- 插入group_history
 INSERT INTO group_history (group_id, action, details) VALUES
 (1, '创建群组', '群组创建'),
 (1, '添加成员', '添加了用户'),

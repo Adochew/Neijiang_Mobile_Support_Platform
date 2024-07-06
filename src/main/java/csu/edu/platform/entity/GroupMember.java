@@ -8,7 +8,7 @@ import lombok.Data;
 @TableName("group_member")
 public class GroupMember {
     private Integer groupId;
-    private Integer userId;
+    private Integer accountId;
     private String role;
     private LocalDateTime createdAt;
 }
