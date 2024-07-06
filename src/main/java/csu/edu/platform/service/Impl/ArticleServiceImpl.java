@@ -28,7 +28,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return new ArticleVO(systemArticle, systemArticleCategory);
     }
-
     public List<ArticleVO> getArticleVOList(){
         List<SystemArticle> systemArticleList = systemArticleMapper.selectList(null);
         List<ArticleVO> articleVOList = new ArrayList<>();
@@ -38,7 +37,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVOList;
     }
-
     public List<ArticleVO> getArticleVOListByAuthorId(int authorId) {
         QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_id", authorId);
@@ -50,7 +48,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVOList;
     }
-
     public List<ArticleVO> getArticleVOListByCategoryId(int categoryId) {
         QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id", categoryId);
@@ -63,35 +60,27 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVOList;
     }
-
-    public Boolean addArticleVO (ArticleVO articleVO) {
-        SystemArticle systemArticle = articleVO.parseSystemArticle();
-        return systemArticleMapper.insert(systemArticle) != 0;
+    public Boolean addArticleInfo (ArticleVO articleVO) {
+        return systemArticleMapper.insert(articleVO.parseSystemArticle()) != 0;
     }
-
-    public Boolean deleteArticleVO (Integer articleId) {
+    public Boolean updateArticleInfo (ArticleVO articleVO) {
+        return systemArticleMapper.updateById(articleVO.parseSystemArticle()) != 0;
+    }
+    public Boolean deleteArticleInfo (Integer articleId) {
         return systemArticleMapper.deleteById(articleId) != 0;
-    }
-
-    public Boolean updateArticleVO (ArticleVO articleVO) {
-        SystemArticle systemArticle = articleVO.parseSystemArticle();
-        return systemArticleMapper.updateById(systemArticle) != 0;
     }
 
     public List<SystemArticleCategory> getArticleCategoryList() {
         QueryWrapper<SystemArticleCategory> queryWrapper = new QueryWrapper<>();
         return systemArticleCategoryMapper.selectList(queryWrapper);
     }
-
     public Boolean addArticleCategory (SystemArticleCategory articleCategory) {
         return systemArticleCategoryMapper.insert(articleCategory) != 0;
     }
-
-    public Boolean deleteArticleCategory (Integer articleCategoryId) {
-        return systemArticleCategoryMapper.deleteById(articleCategoryId) != 0;
-    }
-
     public Boolean updateArticleCategory (SystemArticleCategory articleCategory) {
         return systemArticleCategoryMapper.updateById(articleCategory) != 0;
+    }
+    public Boolean deleteArticleCategory (Integer articleCategoryId) {
+        return systemArticleCategoryMapper.deleteById(articleCategoryId) != 0;
     }
 }

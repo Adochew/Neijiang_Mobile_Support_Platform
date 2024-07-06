@@ -10,12 +10,12 @@ public interface ArticleService {
     List<ArticleVO> getArticleVOList();
     List<ArticleVO> getArticleVOListByAuthorId(int authorId);
     List<ArticleVO> getArticleVOListByCategoryId(int categoryId);
-    Boolean addArticleVO (ArticleVO articleVO);
-    Boolean deleteArticleVO (Integer articleId);
-    Boolean updateArticleVO (ArticleVO articleVO);
+    Boolean addArticleInfo (ArticleVO articleVO);
+    Boolean updateArticleInfo (ArticleVO articleVO);
+    Boolean deleteArticleInfo (Integer articleId);
 
     List<SystemArticleCategory> getArticleCategoryList();
     Boolean addArticleCategory (SystemArticleCategory articleCategory);
-    Boolean deleteArticleCategory (Integer articleCategoryId);
     Boolean updateArticleCategory (SystemArticleCategory articleCategory);
+    Boolean deleteArticleCategory (Integer articleCategoryId);
 }
