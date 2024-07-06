@@ -30,7 +30,7 @@ public class MerchantController {
         if (merchantService.addMerchantCategory(merchantCategory)) {
             return ResponseUtil.success("Merchant category added.");
         } else {
-            return ResponseUtil.error("Merchant category not added.");
+            return ResponseUtil.error("Merchant category not added.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -40,7 +40,7 @@ public class MerchantController {
         if (merchantService.updateMerchantCategory(merchantCategory)) {
             return ResponseUtil.success("Merchant category updated.");
         } else {
-            return ResponseUtil.error("Merchant category not updated.");
+            return ResponseUtil.error("Merchant category not updated.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -50,7 +50,7 @@ public class MerchantController {
         if (merchantService.deleteMerchantCategory(categoryId)) {
             return ResponseUtil.success("Merchant category deleted.");
         } else {
-            return ResponseUtil.error("Merchant category not deleted.");
+            return ResponseUtil.error("Merchant category not deleted.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -81,7 +81,7 @@ public class MerchantController {
         if (merchantService.addMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant added.");
         } else {
-            return ResponseUtil.error("Merchant not added.");
+            return ResponseUtil.error("Merchant not added.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -91,7 +91,7 @@ public class MerchantController {
         if (merchantService.updateMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant updated.");
         } else {
-            return ResponseUtil.error("Merchant not updated.");
+            return ResponseUtil.error("Merchant not updated.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -101,7 +101,7 @@ public class MerchantController {
         if (merchantService.deleteMerchantInfo(merchantId)){
             return ResponseUtil.success("Merchant deleted.");
         } else {
-            return ResponseUtil.error("Merchant not deleted.");
+            return ResponseUtil.error("Merchant not deleted.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -116,7 +116,7 @@ public class MerchantController {
         if (merchantService.addMerchantPromotion(merchantPromotion)){
             return ResponseUtil.success("Merchant promotion added.");
         } else {
-            return ResponseUtil.error("Merchant promotion not added.");
+            return ResponseUtil.error("Merchant promotion not added.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -126,7 +126,7 @@ public class MerchantController {
         if (merchantService.updateMerchantPromotion(merchantPromotion)){
             return ResponseUtil.success("Merchant promotion updated.");
         } else {
-            return ResponseUtil.error("Merchant promotion not updated.");
+            return ResponseUtil.error("Merchant promotion not updated.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -136,7 +136,7 @@ public class MerchantController {
         if (merchantService.deleteMerchantPromotion(promotionId)){
             return ResponseUtil.success("Merchant promotion deleted.");
         } else {
-            return ResponseUtil.error("Merchant promotion not deleted.");
+            return ResponseUtil.error("Merchant promotion not deleted.", HttpStatus.BAD_REQUEST);
         }
     }
 }
