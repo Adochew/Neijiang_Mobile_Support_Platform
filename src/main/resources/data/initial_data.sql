@@ -1,4 +1,3 @@
-
 -- 插入初始数据
 -- 插入系统账号数据
 INSERT INTO system_account (username, password, role_id) VALUES
