@@ -11,7 +11,7 @@ import java.util.Map;
 public class JWTUtil {
     private static final String secretKey = "csu.edu.cn";
 
-    private static final Long expire = 1000L * 60 * 60 * 10;
+    private static final Long expire = 1000L * 60 * 60 * 60;
 
     public static String generateJwt(Map<String, Object> claims){
         String jwt = Jwts.builder()

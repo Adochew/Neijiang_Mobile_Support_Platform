@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String url = request.getRequestURL().toString();
 
-        if (url.contains("token")||url.contains("account")){
+        if (url.contains("token") || url.contains("swagger-ui") || url.contains("v3/api")) {
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter implements Filter {
 
         Integer accountId = (Integer) claims.get("accountId");
         Integer roleId = (Integer) claims.get("roleId");
+        System.out.println(accountId);
         servletRequest.setAttribute("accountId", accountId);
         servletRequest.setAttribute("roleId", roleId);
         filterChain.doFilter(servletRequest,servletResponse);
