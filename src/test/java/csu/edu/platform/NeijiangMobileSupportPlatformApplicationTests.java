@@ -12,11 +12,9 @@ import java.util.List;
 
 @SpringBootTest
 class NeijiangMobileSupportPlatformApplicationTests {
-    @Autowired
-    private WeatherForecastService weatherForecastService;
+
     @Test
     void contextLoads() {
     }
-
 
 }

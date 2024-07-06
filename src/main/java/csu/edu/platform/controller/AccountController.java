@@ -28,7 +28,7 @@ public class AccountController {
      * @param systemAccount 包含用户名和密码的SystemAccount对象
      * @return 成功时返回JWT令牌，失败时返回错误信息
      */
-    @PostMapping("/token")
+    @PostMapping("/tokens")
     public ResponseEntity<Object> login(@RequestBody SystemAccount systemAccount) {
         // 验证用户名和密码
         SystemAccount account = accountService.getSystemAccountByUsernameAndPassword(systemAccount.getUsername(), systemAccount.getPassword());
@@ -77,8 +77,8 @@ public class AccountController {
      * @return 所有系统账户的信息或权限不足的错误信息
      */
     @GetMapping("")
-    public ResponseEntity<Object> getAllAccounts(@RequestAttribute String roleId) {
-        if (roleId.equals("1")) {
+    public ResponseEntity<Object> getAllAccounts(@RequestAttribute Integer roleId) {
+        if (roleId == 1) {
             return ResponseUtil.success(accountService.getSystemAccountList());
         } else {
             return ResponseUtil.error("Insufficient permissions.", HttpStatus.FORBIDDEN);
