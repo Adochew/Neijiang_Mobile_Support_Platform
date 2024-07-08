@@ -2,6 +2,7 @@ package csu.edu.platform.controller;
 
 import csu.edu.platform.service.WeatherForecastService;
 import csu.edu.platform.util.ResponseUtil;
+import csu.edu.platform.util.WeatherDataExtractorUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,7 +25,7 @@ public class WeatherController {
     public ResponseEntity<Object> getWeatherByLocation(@RequestParam String location) {
         try {
             String weatherInfo = weatherForecastService.getWeatherByName(location);
-            return ResponseUtil.success(weatherInfo);
+            return ResponseUtil.success(WeatherDataExtractorUtil.extractDataAsJson(weatherInfo));
         } catch (Exception e) {
             return ResponseUtil.error("Failed to get weather info", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
