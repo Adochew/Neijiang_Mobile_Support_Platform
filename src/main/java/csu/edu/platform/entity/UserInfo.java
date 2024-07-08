@@ -18,6 +18,7 @@ public class UserInfo {
     private String name;
     private String email;
     private String phone;
+    private String imageUrl;
     private LocalDateTime createdAt;
 
     public UserInfo(Integer accountId, String name){
