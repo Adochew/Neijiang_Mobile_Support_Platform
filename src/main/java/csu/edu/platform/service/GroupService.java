@@ -17,7 +17,7 @@ public interface GroupService {
 
     List<GroupMember> getGroupMemberByGroupId(Integer groupId);
     Boolean addGroupMember(GroupMember groupMember);
-    Boolean deleteGroupMember(Integer groupId, Integer accountId);
+    Boolean deleteGroupMember(GroupMember groupMember);
 
     List<GroupHistory> getGroupHistoryByGroupId(Integer groupId);
     Boolean addGroupHistory(GroupHistory groupHistory);

@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     /**
-     * 添加商品类别（需要角色ID为1的权限）
+     * 添加商品类别
      * @param productCategory 商品类别实体
      * @return 添加结果
      */
@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     /**
-     * 更新商品类别（需要角色ID为1的权限）
+     * 更新商品类别
      * @param productCategory 商品类别实体
      * @return 更新结果
      */
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     /**
-     * 删除商品类别（需要角色ID为1的权限）
+     * 删除商品类别
      * @param categoryId 商品类别ID
      * @return 删除结果
      */
@@ -113,7 +113,7 @@ public class ProductController {
     }
 
     /**
-     * 添加商品（需要角色ID为2的权限）
+     * 添加商品
      * @param productVO 商品信息实体
      * @param image 商品图片文件
      * @return 添加结果
@@ -134,7 +134,7 @@ public class ProductController {
     }
 
     /**
-     * 更新商品信息（需要角色ID为2的权限）
+     * 更新商品信息
      * @param productVO 商品信息实体
      * @param image 商品图片文件
      * @return 更新结果
@@ -155,7 +155,7 @@ public class ProductController {
     }
 
     /**
-     * 删除商品（需要角色ID为2的权限）
+     * 删除商品
      * @param productId 商品ID
      * @return 删除结果
      */
