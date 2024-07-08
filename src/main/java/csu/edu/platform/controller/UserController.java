@@ -43,11 +43,10 @@ public class UserController {
     }
 
     /**
-     * 获取所有用户信息（需要角色ID为1的权限）
+     * 获取所有用户信息
      * @return 所有用户信息列表
      */
     @GetMapping("")
-    @RoleRequired({1})
     public ResponseEntity<Object> getAllUserInfo() {
         return ResponseUtil.success(userService.getUserInfoList());
     }
@@ -70,6 +69,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserInfo(@RequestBody UserInfo userInfo,
                                               @RequestParam(required = false) MultipartFile image) {
         if (image != null) {
@@ -90,6 +90,7 @@ public class UserController {
      * @return 更新结果
      */
     @PutMapping("")
+    @RoleRequired({3})
     public ResponseEntity<Object> updateUserInfo(@RequestBody UserInfo userInfo,
                                                  @RequestParam(required = false) MultipartFile image) {
         if (image != null) {
@@ -109,6 +110,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("{userId}")
+    @RoleRequired({1,3})
     public ResponseEntity<Object> deleteUserInfo(@PathVariable Integer userId) {
         UserInfo userInfo = userService.getUserInfoByUserId(userId);
         ossService.deleteFile(userInfo.getImageUrl());
@@ -125,6 +127,7 @@ public class UserController {
      * @return 好友类别列表
      */
     @GetMapping("/friends/categories/{userId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> getUserFriendCategoriesByUserId(@PathVariable Integer userId) {
         return ResponseUtil.success(userService.getUserFriendCategoryListByUserId(userId));
     }
@@ -135,6 +138,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("/friends/categories")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserFriendCategory(@RequestBody UserFriendCategory userFriendCategory) {
         if (userService.addUserFriendCategory(userFriendCategory)){
             return ResponseUtil.success("UserFriendCategory added.");
@@ -149,6 +153,7 @@ public class UserController {
      * @return 更新结果
      */
     @PutMapping("/friends/categories")
+    @RoleRequired({3})
     public ResponseEntity<Object> updateUserFriendCategory(@RequestBody UserFriendCategory userFriendCategory) {
         if (userService.updateUserFriendCategory(userFriendCategory)){
             return ResponseUtil.success("UserFriendCategory updated.");
@@ -163,6 +168,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/friends/categories/{categoryId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> deleteUserFriendCategory(@PathVariable Integer categoryId) {
         if (userService.deleteUserFriendCategory(categoryId)){
             return ResponseUtil.success("UserFriendCategory deleted.");
@@ -177,6 +183,7 @@ public class UserController {
      * @return 好友列表
      */
     @GetMapping("/friends/{userId}")
+    @RoleRequired({1,3})
     public ResponseEntity<Object> getUserFriendsByUserId(@PathVariable Integer userId) {
         return ResponseUtil.success(userService.getUserFriendVOListByUserId(userId));
     }
@@ -188,6 +195,7 @@ public class UserController {
      * @return 好友列表
      */
     @GetMapping("/friends/{userId}/categories/{categoryId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> getUserFriendsByUserIdAndCategoryId(@PathVariable Integer userId,
                                                                       @PathVariable Integer categoryId){
         return ResponseUtil.success(userService.getUserFriendVOListByUserIdAndCategoryId(userId, categoryId));
@@ -199,6 +207,7 @@ public class UserController {
      * @return 好友申请列表
      */
     @GetMapping("/friends/applications/{userId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> getUserFriendApplicationsByUserId(@PathVariable Integer userId) {
         return ResponseUtil.success(userService.getUserFriendApplicationListByUserId(userId));
     }
@@ -209,6 +218,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("/friends/applications")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserFriendApplication(@RequestBody UserFriendApplication userFriendApplication) {
         if (userService.addUserFriendApplication(userFriendApplication)){
             return ResponseUtil.success("UserFriendApplication added.");
@@ -223,6 +233,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/friends/applications")
+    @RoleRequired({3})
     public ResponseEntity<Object> deleteUserFriendApplication(@RequestBody UserFriendApplication userFriendApplication) {
         if (userService.deleteUserFriendApplication(userFriendApplication)){
             return ResponseUtil.success("UserFriendApplication deleted.");
@@ -237,6 +248,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("/friends")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserFriend(@RequestBody UserFriendApplication userFriendApplication) {
         if (userService.addUserFriend(userFriendApplication)){
             return ResponseUtil.success("UserFriend added.");
@@ -251,6 +263,7 @@ public class UserController {
      * @return 更新结果
      */
     @PutMapping("/friends")
+    @RoleRequired({3})
     public ResponseEntity<Object> updateUserFriend(@RequestBody UserFriend userFriend) {
         if (userService.updateUserFriend(userFriend)){
             return ResponseUtil.success("UserFriend updated.");
@@ -265,6 +278,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/friends")
+    @RoleRequired({3})
     public ResponseEntity<Object> deleteUserFriend(@RequestBody UserFriend userFriend) {
         if (userService.deleteUserFriend(userFriend)){
             return ResponseUtil.success("UserFriend deleted.");
@@ -289,6 +303,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("/favorite_merchants")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserFavoriteMerchant(@RequestBody UserFavoriteMerchant userFavoriteMerchant) {
         if (userService.addUserFavoriteMerchant(userFavoriteMerchant)){
             return ResponseUtil.success("UserFavoriteMerchant added.");
@@ -303,6 +318,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/favorite_merchants/{favoriteId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> deleteUserFavoriteMerchant(@PathVariable Integer favoriteId) {
         if (userService.deleteUserFavoriteMerchant(favoriteId)){
             return ResponseUtil.success("UserFavoriteMerchant deleted.");
@@ -327,6 +343,7 @@ public class UserController {
      * @return 添加结果
      */
     @PostMapping("/favorite_products")
+    @RoleRequired({3})
     public ResponseEntity<Object> addUserFavoriteProduct(@RequestBody UserFavoriteProduct userFavoriteProduct) {
         if (userService.addUserFavoriteProduct(userFavoriteProduct)){
             return ResponseUtil.success("UserFavoriteProduct added.");
@@ -341,6 +358,7 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/favorite_products/{favoriteId}")
+    @RoleRequired({3})
     public ResponseEntity<Object> deleteUserFavoriteProduct(@PathVariable Integer favoriteId) {
         if (userService.deleteUserFavoriteProduct(favoriteId)){
             return ResponseUtil.success("UserFavoriteProduct deleted.");

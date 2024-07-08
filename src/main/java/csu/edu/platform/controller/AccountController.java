@@ -78,7 +78,6 @@ public class AccountController {
      * @return 所有系统账户的信息 
      */
     @GetMapping("")
-    @RoleRequired({1})
     public ResponseEntity<Object> getAllAccounts() {
             return ResponseUtil.success(accountService.getSystemAccountList());
     }

@@ -63,10 +63,10 @@ public class GroupServiceImpl implements GroupService {
     public Boolean addGroupMember(GroupMember groupMember) {
         return groupMemberMapper.insert(groupMember) != 0;
     }
-    public Boolean deleteGroupMember(Integer groupId, Integer accountId) {
+    public Boolean deleteGroupMember(GroupMember groupMember) {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("group_id", groupId);
-        queryWrapper.eq("account_id", accountId);
+        queryWrapper.eq("group_id", groupMember.getGroupId());
+        queryWrapper.eq("account_id", groupMember.getAccountId());
         return groupMemberMapper.delete(queryWrapper) != 0;
     }
 

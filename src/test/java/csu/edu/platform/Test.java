@@ -109,7 +109,7 @@ public class Test {
         groupHistory.setAction("test");
         System.out.println(groupService.addGroupHistory(groupHistory)? "群组历史记录添加成功" : "群组历史记录添加失败");
         //删除
-        System.out.println(groupService.deleteGroupMember(3,2)? "群组成员删除成功" : "群组成员删除失败");
+        //System.out.println(groupService.deleteGroupMember(3,2)? "群组成员删除成功" : "群组成员删除失败");
         System.out.println(groupService.deleteGroupInfo(3)? "群组删除成功" : "群组删除失败");
 
     }

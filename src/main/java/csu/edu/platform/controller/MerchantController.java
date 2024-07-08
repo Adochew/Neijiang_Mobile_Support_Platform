@@ -94,7 +94,6 @@ public class MerchantController {
      * @return 所有商户的列表
      */
     @GetMapping("")
-    @RoleRequired({1})
     public ResponseEntity<Object> getAllMerchants(){
         return ResponseUtil.success(merchantService.getMerchantVOList());
     }
