@@ -70,8 +70,8 @@ public class GroupController {
      * @return 添加结果
      */
     @PostMapping("")
-    public ResponseEntity<Object> addGroupInfo(@RequestBody GroupInfo groupInfo,
-                                               @RequestParam(required = false) MultipartFile image) {
+    public ResponseEntity<Object> addGroupInfo(@RequestPart GroupInfo groupInfo,
+                                               @RequestPart(required = false) MultipartFile image) {
         if (image != null){
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             groupInfo.setImageUrl(imageUrl);
@@ -90,8 +90,8 @@ public class GroupController {
      * @return 更新结果
      */
     @PutMapping("")
-    public ResponseEntity<Object> updateGroupInfo(@RequestBody GroupInfo groupInfo,
-                                                  @RequestParam(required = false) MultipartFile image) {
+    public ResponseEntity<Object> updateGroupInfo(@RequestPart GroupInfo groupInfo,
+                                                  @RequestPart(required = false) MultipartFile image) {
         if (image != null){
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             groupInfo.setImageUrl(imageUrl);

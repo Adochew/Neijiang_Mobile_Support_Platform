@@ -70,8 +70,8 @@ public class UserController {
      */
     @PostMapping("")
     @RoleRequired({3})
-    public ResponseEntity<Object> addUserInfo(@RequestBody UserInfo userInfo,
-                                              @RequestParam(required = false) MultipartFile image) {
+    public ResponseEntity<Object> addUserInfo(@RequestPart UserInfo userInfo,
+                                              @RequestPart(required = false) MultipartFile image) {
         if (image != null) {
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             userInfo.setImageUrl(imageUrl);
@@ -91,8 +91,8 @@ public class UserController {
      */
     @PutMapping("")
     @RoleRequired({3})
-    public ResponseEntity<Object> updateUserInfo(@RequestBody UserInfo userInfo,
-                                                 @RequestParam(required = false) MultipartFile image) {
+    public ResponseEntity<Object> updateUserInfo(@RequestPart UserInfo userInfo,
+                                                 @RequestPart(required = false) MultipartFile image) {
         if (image != null) {
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             userInfo.setImageUrl(imageUrl);

@@ -127,8 +127,8 @@ public class MerchantController {
      */
     @PostMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> addMerchant(@RequestBody MerchantVO merchantVO,
-                                              @RequestParam(required = false) MultipartFile image){
+    public ResponseEntity<Object> addMerchant(@RequestPart MerchantVO merchantVO,
+                                              @RequestPart(required = false) MultipartFile image){
         if (image != null){
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             merchantVO.setImageUrl(imageUrl);
@@ -148,8 +148,8 @@ public class MerchantController {
      */
     @PutMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> updateMerchant(@RequestBody MerchantVO merchantVO,
-                                                 @RequestParam(required = false) MultipartFile image){
+    public ResponseEntity<Object> updateMerchant(@RequestPart MerchantVO merchantVO,
+                                                 @RequestPart(required = false) MultipartFile image){
         if (image != null){
             String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
             merchantVO.setImageUrl(imageUrl);
