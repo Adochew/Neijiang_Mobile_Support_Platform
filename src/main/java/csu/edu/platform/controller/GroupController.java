@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import csu.edu.platform.entity.GroupHistory;
 import csu.edu.platform.entity.GroupInfo;
 import csu.edu.platform.entity.GroupMember;
+import csu.edu.platform.entity.MerchantInfo;
 import csu.edu.platform.service.GroupService;
+import csu.edu.platform.service.MerchantService;
 import csu.edu.platform.service.OssService;
 import csu.edu.platform.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,16 +68,10 @@ public class GroupController {
     /**
      * 添加群组信息
      * @param groupInfo 群组信息实体
-     * @param image 群组图片文件
      * @return 添加结果
      */
     @PostMapping("")
-    public ResponseEntity<Object> addGroupInfo(@RequestPart GroupInfo groupInfo,
-                                               @RequestPart(required = false) MultipartFile image) {
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            groupInfo.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> addGroupInfo(@RequestPart GroupInfo groupInfo) {
         if (groupService.addGroupInfo(groupInfo)) {
             return ResponseUtil.success("GroupInfo added.");
         } else {
@@ -86,21 +82,28 @@ public class GroupController {
     /**
      * 更新群组信息
      * @param groupInfo 群组信息实体
-     * @param image 群组图片文件
      * @return 更新结果
      */
     @PutMapping("")
-    public ResponseEntity<Object> updateGroupInfo(@RequestPart GroupInfo groupInfo,
-                                                  @RequestPart(required = false) MultipartFile image) {
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            groupInfo.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> updateGroupInfo(@RequestPart GroupInfo groupInfo) {
         if (groupService.updateGroupInfo(groupInfo)) {
             return ResponseUtil.success("GroupInfo updated.");
         } else {
             return ResponseUtil.error("GroupInfo not updated.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * 更新商品图片
+     * @param groupId 商品ID
+     * @param image 商品图片
+     * @return 更新结果
+     */
+    @PostMapping("/images/{groupId}")
+    public ResponseEntity<Object> addGroupImage(@PathVariable Integer groupId,
+                                                @RequestParam MultipartFile image) {
+        String url = ossService.updateFile(GroupService.class, groupId, image, UUID.randomUUID().toString());
+        return ResponseUtil.success(url);
     }
 
     /**

@@ -6,6 +6,9 @@ import csu.edu.platform.vo.ProductVO;
 import java.util.List;
 
 public interface ProductService {
+    String getImageUrl(Integer productId);
+    Boolean setImageUrl(Integer productId, String imageUrl);
+
     List<MerchantProductCategory> getMerchantProductCategoryList();
     Boolean addMerchantProductCategory(MerchantProductCategory merchantProductCategory);
     Boolean updateMerchantProductCategory(MerchantProductCategory merchantProductCategory);

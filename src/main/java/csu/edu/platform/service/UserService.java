@@ -5,7 +5,10 @@ import csu.edu.platform.vo.UserFriendVO;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService{
+    String getImageUrl(Integer userId);
+    Boolean setImageUrl(Integer userId, String imageUrl);
+
     UserInfo getUserInfoByUserId(Integer userId);
     UserInfo getUserInfoByAccountId(Integer accountId);
     List<UserInfo> getUserInfoList();

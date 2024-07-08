@@ -1,6 +1,7 @@
 package csu.edu.platform.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import csu.edu.platform.entity.MerchantInfo;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantProductCategory;
 import csu.edu.platform.persistence.MerchantCommentMapper;
@@ -22,6 +23,14 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private MerchantProductCategoryMapper merchantProductCategoryMapper;
 
+    public String getImageUrl(Integer productId) {
+        return merchantProductMapper.selectById(productId).getImageUrl();
+    }
+    public Boolean setImageUrl(Integer productId, String imageUrl) {
+        MerchantProduct merchantProduct = merchantProductMapper.selectById(productId);
+        merchantProduct.setImageUrl(imageUrl);
+        return merchantProductMapper.updateById(merchantProduct) != 0;
+    }
     public List<MerchantProductCategory> getMerchantProductCategoryList() {
         return merchantProductCategoryMapper.selectList(null);
     }

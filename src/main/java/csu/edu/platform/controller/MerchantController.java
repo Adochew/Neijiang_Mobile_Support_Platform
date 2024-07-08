@@ -3,9 +3,12 @@ package csu.edu.platform.controller;
 import com.alibaba.fastjson.JSON;
 import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.MerchantCategory;
+import csu.edu.platform.entity.MerchantInfo;
+import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantPromotion;
 import csu.edu.platform.service.MerchantService;
 import csu.edu.platform.service.OssService;
+import csu.edu.platform.service.ProductService;
 import csu.edu.platform.util.ResponseUtil;
 import csu.edu.platform.vo.MerchantVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,17 +125,11 @@ public class MerchantController {
     /**
      * 添加商户信息
      * @param merchantVO 商户信息实体
-     * @param image 商户图片文件
      * @return 添加结果
      */
     @PostMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> addMerchant(@RequestPart MerchantVO merchantVO,
-                                              @RequestPart(required = false) MultipartFile image){
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            merchantVO.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> addMerchant(@RequestBody MerchantVO merchantVO){
         if (merchantService.addMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant added.");
         } else {
@@ -143,22 +140,29 @@ public class MerchantController {
     /**
      * 更新商户信息
      * @param merchantVO 商户信息实体
-     * @param image 商户图片文件
      * @return 更新结果
      */
     @PutMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> updateMerchant(@RequestPart MerchantVO merchantVO,
-                                                 @RequestPart(required = false) MultipartFile image){
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            merchantVO.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> updateMerchant(@RequestPart MerchantVO merchantVO){
         if (merchantService.updateMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant updated.");
         } else {
             return ResponseUtil.error("Merchant not updated.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * 更新商品图片
+     * @param merchantId 商品ID
+     * @param image 商品图片
+     * @return 更新结果
+     */
+    @PostMapping("/images/{merchantId}")
+    public ResponseEntity<Object> addMerchantImage(@PathVariable Integer merchantId,
+                                                   @RequestParam MultipartFile image) {
+        String url = ossService.updateFile(MerchantService.class, merchantId, image, UUID.randomUUID().toString());
+        return ResponseUtil.success(url);
     }
 
     /**

@@ -1,10 +1,7 @@
 package csu.edu.platform.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import csu.edu.platform.entity.MerchantCategory;
-import csu.edu.platform.entity.MerchantInfo;
-import csu.edu.platform.entity.MerchantProduct;
-import csu.edu.platform.entity.MerchantPromotion;
+import csu.edu.platform.entity.*;
 import csu.edu.platform.persistence.*;
 import csu.edu.platform.service.MerchantService;
 import csu.edu.platform.vo.MerchantVO;
@@ -23,6 +20,14 @@ public class MerchantServiceImpl implements MerchantService {
     @Autowired
     private MerchantPromotionMapper merchantPromotionMapper;
 
+    public String getImageUrl(Integer merchantId) {
+        return merchantInfoMapper.selectById(merchantId).getImageUrl();
+    }
+    public Boolean setImageUrl(Integer merchantId, String imageUrl) {
+        MerchantInfo merchantInfo = merchantInfoMapper.selectById(merchantId);
+        merchantInfo.setImageUrl(imageUrl);
+        return merchantInfoMapper.updateById(merchantInfo) != 0;
+    }
     public List<MerchantCategory> getMerchantCategoryList() {
         return merchantCategoryMapper.selectList(null);
     }

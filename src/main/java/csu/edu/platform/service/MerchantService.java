@@ -7,6 +7,9 @@ import csu.edu.platform.vo.MerchantVO;
 import java.util.List;
 
 public interface MerchantService {
+    String getImageUrl(Integer merchantId);
+    Boolean setImageUrl(Integer merchantId, String imageUrl);
+
     List<MerchantCategory> getMerchantCategoryList();
     Boolean addMerchantCategory(MerchantCategory merchantCategory);
     Boolean updateMerchantCategory(MerchantCategory merchantCategory);

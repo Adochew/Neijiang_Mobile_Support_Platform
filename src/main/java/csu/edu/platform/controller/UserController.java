@@ -65,17 +65,11 @@ public class UserController {
     /**
      * 添加用户信息
      * @param userInfo 用户信息实体
-     * @param image 用户头像文件
      * @return 添加结果
      */
     @PostMapping("")
     @RoleRequired({3})
-    public ResponseEntity<Object> addUserInfo(@RequestPart UserInfo userInfo,
-                                              @RequestPart(required = false) MultipartFile image) {
-        if (image != null) {
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            userInfo.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> addUserInfo(@RequestBody UserInfo userInfo) {
         if (userService.addUserInfo(userInfo)){
             return ResponseUtil.success("UserInfo added.");
         } else {
@@ -86,22 +80,29 @@ public class UserController {
     /**
      * 更新用户信息
      * @param userInfo 用户信息实体
-     * @param image 用户头像文件
      * @return 更新结果
      */
     @PutMapping("")
     @RoleRequired({3})
-    public ResponseEntity<Object> updateUserInfo(@RequestPart UserInfo userInfo,
-                                                 @RequestPart(required = false) MultipartFile image) {
-        if (image != null) {
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            userInfo.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> updateUserInfo(@RequestBody UserInfo userInfo) {
         if (userService.updateUserInfo(userInfo)){
             return ResponseUtil.success("UserInfo updated.");
         } else {
             return ResponseUtil.error("UserInfo not updated.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * 更新用户图片
+     * @param userId 用户ID
+     * @param image 用户图片
+     * @return 更新结果
+     */
+    @PostMapping("/images/{userId}")
+    public ResponseEntity<Object> addUserInfoImage(@PathVariable Integer userId,
+                                                   @RequestParam MultipartFile image) {
+        String url = ossService.updateFile(UserService.class, userId, image, UUID.randomUUID().toString());
+        return ResponseUtil.success(url);
     }
 
     /**

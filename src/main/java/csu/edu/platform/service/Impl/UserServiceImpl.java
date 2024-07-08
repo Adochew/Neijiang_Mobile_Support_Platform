@@ -27,6 +27,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserFavoriteProductMapper userFavoriteProductMapper;
 
+    public String getImageUrl(Integer userId) {
+        return userInfoMapper.selectById(userId).getImageUrl();
+    }
+    public Boolean setImageUrl(Integer userId, String imageUrl) {
+        UserInfo userInfo = userInfoMapper.selectById(userId);
+        userInfo.setImageUrl(imageUrl);
+        return userInfoMapper.updateById(userInfo) != 0;
+    }
     public UserInfo getUserInfoByUserId(Integer userId) {
         return userInfoMapper.selectById(userId);
     }

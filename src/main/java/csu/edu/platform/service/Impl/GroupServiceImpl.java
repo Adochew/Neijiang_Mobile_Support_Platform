@@ -23,6 +23,14 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     private GroupHistoryMapper groupHistoryMapper;
 
+    public String getImageUrl(Integer groupId) {
+        return groupInfoMapper.selectById(groupId).getImageUrl();
+    }
+    public Boolean setImageUrl(Integer groupId, String imageUrl) {
+        GroupInfo groupInfo = groupInfoMapper.selectById(groupId);
+        groupInfo.setImageUrl(imageUrl);
+        return groupInfoMapper.updateById(groupInfo) != 0 ;
+    }
     public GroupInfo getGroupInfoByGroupId(Integer groupId) {
         return groupInfoMapper.selectById(groupId);
     }

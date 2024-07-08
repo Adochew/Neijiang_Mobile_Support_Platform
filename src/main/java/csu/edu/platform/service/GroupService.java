@@ -7,6 +7,9 @@ import csu.edu.platform.entity.GroupMember;
 import java.util.List;
 
 public interface GroupService {
+    String getImageUrl(Integer groupId);
+    Boolean setImageUrl(Integer groupId, String imageUrl);
+
     GroupInfo getGroupInfoByGroupId(Integer groupId);
     List<GroupInfo> getGroupInfoList();
     List<GroupInfo> getGroupInfoListByAccountId(Integer accountId);

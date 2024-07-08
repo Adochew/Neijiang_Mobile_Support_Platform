@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantProductCategory;
+import csu.edu.platform.entity.UserInfo;
 import csu.edu.platform.service.OssService;
 import csu.edu.platform.service.ProductService;
+import csu.edu.platform.service.UserService;
 import csu.edu.platform.util.ResponseUtil;
 import csu.edu.platform.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,17 +129,11 @@ public class ProductController {
     /**
      * 添加商品
      * @param productVO 商品信息实体
-     * @param image 商品图片文件
      * @return 添加结果
      */
     @PostMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> addMerchantProduct(@RequestPart ProductVO productVO,
-                                                     @RequestPart(required = false) MultipartFile image) {
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            productVO.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> addMerchantProduct(@RequestPart ProductVO productVO) {
         if (productService.addMerchantProduct(productVO)){
             return ResponseUtil.success("Merchant product added.");
         } else {
@@ -148,22 +144,29 @@ public class ProductController {
     /**
      * 更新商品信息
      * @param productVO 商品信息实体
-     * @param image 商品图片文件
      * @return 更新结果
      */
     @PutMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> updateMerchantProduct(@RequestPart ProductVO productVO,
-                                                        @RequestPart(required = false) MultipartFile image) {
-        if (image != null){
-            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
-            productVO.setImageUrl(imageUrl);
-        }
+    public ResponseEntity<Object> updateMerchantProduct(@RequestPart ProductVO productVO) {
         if (productService.updateMerchantProduct(productVO)){
             return ResponseUtil.success("Merchant product updated.");
         } else {
             return ResponseUtil.error("Merchant product not updated.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * 更新商品图片
+     * @param productId 商品ID
+     * @param image 商品图片
+     * @return 更新结果
+     */
+    @PostMapping("/images/{productId}")
+    public ResponseEntity<Object> addMerchantProductImage(@PathVariable Integer productId,
+                                                          @RequestParam MultipartFile image) {
+        String url = ossService.updateFile(ProductService.class, productId, image, UUID.randomUUID().toString());
+        return ResponseUtil.success(url);
     }
 
     /**

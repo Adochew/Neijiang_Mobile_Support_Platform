@@ -5,9 +5,11 @@ import com.aliyun.oss.model.PutObjectResult;
 import csu.edu.platform.service.OssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Method;
 import java.io.File;
 
 @Service("ossService")
@@ -15,6 +17,9 @@ public class OssServiceImpl implements OssService {
 
     @Autowired
     private OSS ossClient;
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Value("${aliyun.oss.bucketName}")
     private String bucketName;
     @Value("${aliyun.oss.endpoint}")
@@ -48,7 +53,7 @@ public class OssServiceImpl implements OssService {
         return null;
     }
 
-    public boolean deleteFile(String fileUrl) {
+    public Boolean deleteFile(String fileUrl) {
         try {
             // 解析文件URL以获取bucket名称和文件名
             String bucketName = fileUrl.split("\\.")[0].substring(8);  // 从"https://"之后取子字符串
@@ -62,4 +67,43 @@ public class OssServiceImpl implements OssService {
             return false;
         }
     }
+
+    /**
+     * 更新文件，并调用相应的服务方法更新数据库记录
+     *
+     * @param serviceClass  服务类的Class对象
+     * @param id            实体记录的ID
+     * @param file          上传的文件
+     * @param fileName      文件名
+     * @return              新文件的URL，如果更新失败返回null
+     */
+    public String updateFile(Class<?> serviceClass, Integer id, MultipartFile file, String fileName) {
+        try {
+            // 从Spring容器中获取服务实例
+            Object serviceInstance = applicationContext.getBean(serviceClass);
+
+            // 获取用于获取旧图片URL的方法
+            Method getImageUrlMethod = serviceClass.getMethod("getImageUrl", Integer.class);
+            // 获取用于设置新图片URL的方法
+            Method setImageUrlMethod = serviceClass.getMethod("setImageUrl", Integer.class, String.class);
+
+            // 上传新文件并获取新URL
+            String newUrl = this.uploadFile(file, fileName);
+            // 更新实体记录
+            if ((Boolean) setImageUrlMethod.invoke(serviceInstance, id, newUrl)){
+                // 获取旧图片URL
+                String oldUrl = (String) getImageUrlMethod.invoke(serviceInstance, id);
+                // 删除旧文件
+                this.deleteFile(oldUrl);
+                return newUrl;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
