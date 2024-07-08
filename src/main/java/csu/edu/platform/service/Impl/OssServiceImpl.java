@@ -86,13 +86,13 @@ public class OssServiceImpl implements OssService {
             Method getImageUrlMethod = serviceClass.getMethod("getImageUrl", Integer.class);
             // 获取用于设置新图片URL的方法
             Method setImageUrlMethod = serviceClass.getMethod("setImageUrl", Integer.class, String.class);
+            // 获取旧图片URL
+            String oldUrl = (String) getImageUrlMethod.invoke(serviceInstance, id);
 
             // 上传新文件并获取新URL
             String newUrl = this.uploadFile(file, fileName);
             // 更新实体记录
             if ((Boolean) setImageUrlMethod.invoke(serviceInstance, id, newUrl)){
-                // 获取旧图片URL
-                String oldUrl = (String) getImageUrlMethod.invoke(serviceInstance, id);
                 // 删除旧文件
                 this.deleteFile(oldUrl);
                 return newUrl;
