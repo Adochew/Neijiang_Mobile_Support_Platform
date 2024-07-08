@@ -50,7 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
     public List<ArticleVO> getArticleVOListByKeyword(String keyword) {
         QueryWrapper<SystemArticle> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("title", keyword);
+        queryWrapper.like("title", keyword);
         List<SystemArticle> systemArticles = systemArticleMapper.selectList(queryWrapper);
         List<ArticleVO> articleVOList = new ArrayList<>();
         for (SystemArticle systemArticle : systemArticles) {
