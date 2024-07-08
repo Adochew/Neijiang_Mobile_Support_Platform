@@ -5,20 +5,25 @@ import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.MerchantCategory;
 import csu.edu.platform.entity.MerchantPromotion;
 import csu.edu.platform.service.MerchantService;
+import csu.edu.platform.service.OssService;
 import csu.edu.platform.util.ResponseUtil;
 import csu.edu.platform.vo.MerchantVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/merchants")
 public class MerchantController {
     @Autowired
     private MerchantService merchantService;
+    @Autowired
+    private OssService ossService;
 
     @GetMapping("/categories")
     public ResponseEntity<Object> getAllCategories() {
@@ -79,7 +84,12 @@ public class MerchantController {
 
     @PostMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> addMerchant(@RequestBody MerchantVO merchantVO){
+    public ResponseEntity<Object> addMerchant(@RequestBody MerchantVO merchantVO,
+                                              @RequestParam(required = false) MultipartFile image){
+        if (image != null){
+            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
+            merchantVO.setImageUrl(imageUrl);
+        }
         if (merchantService.addMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant added.");
         } else {
@@ -89,7 +99,12 @@ public class MerchantController {
 
     @PutMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> updateMerchant(@RequestBody MerchantVO merchantVO){
+    public ResponseEntity<Object> updateMerchant(@RequestBody MerchantVO merchantVO,
+                                                 @RequestParam(required = false) MultipartFile image){
+        if (image != null){
+            String imageUrl = ossService.uploadFile(image, UUID.randomUUID().toString());
+            merchantVO.setImageUrl(imageUrl);
+        }
         if (merchantService.updateMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant updated.");
         } else {
@@ -100,6 +115,8 @@ public class MerchantController {
     @DeleteMapping({"/{merchantId}"})
     @RoleRequired({1, 2})
     public ResponseEntity<Object> deleteMerchant(@PathVariable Integer merchantId){
+        MerchantVO merchantVO = merchantService.getMerchantVOByMerchantId(merchantId);
+        ossService.deleteFile(merchantVO.getImageUrl());
         if (merchantService.deleteMerchantInfo(merchantId)){
             return ResponseUtil.success("Merchant deleted.");
         } else {
