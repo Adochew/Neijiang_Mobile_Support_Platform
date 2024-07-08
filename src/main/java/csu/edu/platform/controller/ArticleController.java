@@ -18,8 +18,8 @@ public class ArticleController {
     private ArticleService articleService;
 
     /**
-     * 获取所有文章的接口。
-     * @return 所有文章的列表。
+     * 获取所有文章的接口 
+     * @return 所有文章的列表 
      */
     @GetMapping("")
     public ResponseEntity<Object> getAllArticles() {
@@ -27,9 +27,9 @@ public class ArticleController {
     }
 
     /**
-     * 根据分类ID获取文章的接口。
-     * @param articleId 文章ID。
-     * @return 指定ID的文章。
+     * 根据分类ID获取文章的接口 
+     * @param articleId 文章ID 
+     * @return 指定ID的文章 
      */
     @GetMapping("/{articleId}")
     public ResponseEntity<Object> getArticleByArticleId(@PathVariable int articleId) {
@@ -37,9 +37,9 @@ public class ArticleController {
     }
 
     /**
-     * 根据关键词获取文章的接口。
-     * @param request 文章标题关键词。
-     * @return 指定的文章列表。
+     * 根据关键词获取文章的接口 
+     * @param request 文章标题关键词 
+     * @return 指定的文章列表 
      */
     @PostMapping("/search")
     public ResponseEntity<Object> searchArticle(@RequestBody String request) {
@@ -48,9 +48,9 @@ public class ArticleController {
     }
 
     /**
-     * 根据分类ID获取文章的接口。
-     * @param categoryId 文章分类ID。
-     * @return 指定分类ID的文章列表。
+     * 根据分类ID获取文章的接口 
+     * @param categoryId 文章分类ID 
+     * @return 指定分类ID的文章列表 
      */
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<Object> getArticlesByCategoryId(@PathVariable Integer categoryId) {
@@ -58,9 +58,9 @@ public class ArticleController {
     }
 
     /**
-     * 根据作者ID获取文章的接口。
-     * @param authorId 作者ID。
-     * @return 指定作者ID的文章列表。
+     * 根据作者ID获取文章的接口 
+     * @param authorId 作者ID 
+     * @return 指定作者ID的文章列表 
      */
     @GetMapping("/authors/{authorId}")
     public ResponseEntity<Object> getArticlesByAuthorId(@PathVariable Integer authorId) {
@@ -68,9 +68,9 @@ public class ArticleController {
     }
 
     /**
-     * 添加新文章的接口。
-     * @param articleVO 包含文章信息的ArticleVO对象。
-     * @return 成功或失败的消息。
+     * 添加新文章的接口
+     * @param articleVO 包含文章信息的ArticleVO对象 
+     * @return 成功或失败的消息 
      */
     @PostMapping("")
     @RoleRequired({1})
@@ -83,9 +83,9 @@ public class ArticleController {
     }
 
     /**
-     * 更新文章的接口。
-     * @param articleVO 包含更新信息的ArticleVO对象。
-     * @return 成功或失败的消息。
+     * 更新文章的接口
+     * @param articleVO 包含更新信息的ArticleVO对象 
+     * @return 成功或失败的消息 
      */
     @PutMapping("")
     @RoleRequired({1})
@@ -98,9 +98,9 @@ public class ArticleController {
     }
 
     /**
-     * 删除文章的接口。
-     * @param articleId 文章ID。
-     * @return 成功或失败的消息。
+     * 删除文章的接口
+     * @param articleId 文章ID 
+     * @return 成功或失败的消息 
      */
     @DeleteMapping("/{articleId}")
     @RoleRequired({1})
@@ -113,8 +113,8 @@ public class ArticleController {
     }
 
     /**
-     * 获取所有文章分类的接口。
-     * @return 所有文章分类。
+     * 获取所有文章分类的接口 
+     * @return 所有文章分类 
      */
     @GetMapping("/categories")
     public ResponseEntity<Object> getArticleCategories() {
@@ -122,9 +122,9 @@ public class ArticleController {
     }
 
     /**
-     * 添加文章分类的接口。
-     * @param articleCategory 包含分类信息的SystemArticleCategory对象。
-     * @return 成功或失败的消息。
+     * 添加文章分类的接口 
+     * @param articleCategory 包含分类信息的SystemArticleCategory对象 
+     * @return 成功或失败的消息 
      */
     @PostMapping("/categories")
     @RoleRequired({1})
@@ -137,9 +137,9 @@ public class ArticleController {
     }
 
     /**
-     * 更新文章分类的接口。
-     * @param articleCategory 包含更新信息的SystemArticleCategory对象。
-     * @return 成功或失败的消息。
+     * 更新文章分类的接口 
+     * @param articleCategory 包含更新信息的SystemArticleCategory对象 
+     * @return 成功或失败的消息 
      */
     @PutMapping("/categories")
     @RoleRequired({1})
@@ -152,9 +152,9 @@ public class ArticleController {
     }
 
     /**
-     * 删除文章分类的接口。
-     * @param categoryId 分类ID。
-     * @return 成功或失败的消息。
+     * 删除文章分类的接口 
+     * @param categoryId 分类ID 
+     * @return 成功或失败的消息 
      */
     @DeleteMapping("/categories/{categoryId}")
     @RoleRequired({1})

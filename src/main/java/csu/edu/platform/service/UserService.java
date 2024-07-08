@@ -22,6 +22,7 @@ public interface UserService {
 
     List<UserFriendVO> getUserFriendVOListByUserId(Integer userId);
     List<UserFriendVO> getUserFriendVOListByUserIdAndCategoryId(Integer userId, Integer categoryId);
+    List<UserFriendApplication> getUserFriendApplicationListByUserId(Integer userId);
     Boolean addUserFriendApplication(UserFriendApplication userFriendApplication);
     Boolean deleteUserFriendApplication(UserFriendApplication userFriendApplication);
     Boolean addUserFriend(UserFriendApplication userFriendApplication);

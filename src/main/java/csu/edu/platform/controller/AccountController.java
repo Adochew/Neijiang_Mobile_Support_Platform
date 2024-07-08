@@ -26,7 +26,7 @@ public class AccountController {
     private UserService userService;
 
     /**
-     * 登录接口，验证用户的用户名和密码，并生成JWT令牌。
+     * 登录接口，验证用户的用户名和密码，并生成JWT令牌 
      * @param systemAccount 包含用户名和密码的SystemAccount对象
      * @return 成功时返回JWT令牌，失败时返回错误信息
      */
@@ -47,7 +47,7 @@ public class AccountController {
     }
 
     /**
-     * 注册接口，注册新的系统账号。
+     * 注册接口，注册新的系统账号 
      * @param systemAccount 包含注册信息的SystemAccount对象
      * @return 注册成功或失败的信息
      */
@@ -74,8 +74,8 @@ public class AccountController {
     }
 
     /**
-     * 获取所有账户信息的接口。
-     * @return 所有系统账户的信息。
+     * 获取所有账户信息的接口 
+     * @return 所有系统账户的信息 
      */
     @GetMapping("")
     @RoleRequired({1})
@@ -84,7 +84,7 @@ public class AccountController {
     }
 
     /**
-     * 更新账户信息的接口。
+     * 更新账户信息的接口 
      * @param systemAccount 包含更新信息的SystemAccount对象
      * @return 更新成功或失败的信息
      */
@@ -98,7 +98,7 @@ public class AccountController {
     }
 
     /**
-     * 删除账户的接口。
+     * 删除账户的接口 
      * @param account_id 要删除的账户ID
      * @return 删除成功或失败的信息
      */
@@ -112,7 +112,7 @@ public class AccountController {
     }
 
     /**
-     * 搜索账户的接口，通过关键词搜索相关的账户信息。
+     * 搜索账户的接口，通过关键词搜索相关的账户信息 
      * @param request 搜索关键词
      * @return 符合关键词的账户信息
      */

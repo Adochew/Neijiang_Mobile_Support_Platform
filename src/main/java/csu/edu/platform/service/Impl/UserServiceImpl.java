@@ -102,6 +102,11 @@ public class UserServiceImpl implements UserService {
         }
         return userFriendVOList;
     }
+    public List<UserFriendApplication> getUserFriendApplicationListByUserId(Integer userId){
+        QueryWrapper<UserFriendApplication> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        return userFriendApplicationMapper.selectList(queryWrapper);
+    }
     public Boolean addUserFriendApplication(UserFriendApplication userFriendApplication) {
         return userFriendApplicationMapper.insert(userFriendApplication) != 0;
     }
