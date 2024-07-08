@@ -43,13 +43,13 @@ CREATE TABLE system_account (
 );
 -- 插入system_account
 INSERT INTO system_account (account_id, username, password, role_id) VALUES
-(1, '管理员', 'admin', 1),
-(2, '商户一', '1234', 2),
-(3, '商户二', 'merchantpass2', 2),
-(4, '李一', '1234', 3),
-(5, '王二', 'userpass2', 3),
-(6, '张三', 'userpass2', 3),
-(7, '费四', 'userpass2', 3);
+(1, 'admin', 'admin', 1),
+(2, 'merchant1', '1234', 2),
+(3, 'merchant2', 'merchantpass2', 2),
+(4, 'test', '1234', 3),
+(5, 'user2', 'userpass2', 3),
+(6, 'user3', 'userpass2', 3),
+(7, 'user4', 'userpass2', 3);
 
 -- system_article 系统文章表
 CREATE TABLE system_article (
