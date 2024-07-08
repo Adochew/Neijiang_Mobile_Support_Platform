@@ -13,20 +13,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 @WebFilter(urlPatterns = "/*")
 public class JwtAuthenticationFilter implements Filter {
+
+    private static final List<String> EXCLUDE_URLS = Arrays.asList("token", "chat", "swagger-ui", "v3/api");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String url = request.getRequestURL().toString();
 
-        if (url.contains("token") || url.contains("swagger-ui") || url.contains("v3/api")) {
-            filterChain.doFilter(servletRequest,servletResponse);
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+
+        String url = request.getRequestURL().toString();
+        if (EXCLUDE_URLS.stream().anyMatch(url::contains)) {
+            filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
@@ -45,7 +52,7 @@ public class JwtAuthenticationFilter implements Filter {
         Integer roleId = (Integer) claims.get("roleId");
         servletRequest.setAttribute("accountId", accountId);
         servletRequest.setAttribute("roleId", roleId);
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private void sendErrorResponse(HttpServletResponse response, String message, HttpStatus status) throws IOException {

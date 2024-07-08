@@ -42,7 +42,11 @@ public class ProductController {
     @PostMapping("/categories")
     @RoleRequired({1})
     public ResponseEntity<Object> addMerchantProductCategory(@RequestBody MerchantProductCategory productCategory) {
-        return ResponseUtil.success(productService.addMerchantProductCategory(productCategory));
+        if (productService.addMerchantProductCategory(productCategory)) {
+            return ResponseUtil.success("Product category added.");
+        } else {
+            return ResponseUtil.error("Product category not added.");
+        }
     }
 
     /**
@@ -53,7 +57,11 @@ public class ProductController {
     @PutMapping("/categories")
     @RoleRequired({1})
     public ResponseEntity<Object> updateMerchantProductCategory(@RequestBody MerchantProductCategory productCategory) {
-        return ResponseUtil.success(productService.updateMerchantProductCategory(productCategory));
+        if (productService.updateMerchantProductCategory(productCategory)) {
+            return ResponseUtil.success("Product category updated.");
+        } else {
+            return ResponseUtil.error("Product category not updated.");
+        }
     }
 
     /**
@@ -64,7 +72,11 @@ public class ProductController {
     @DeleteMapping("/categories/{categoryId}")
     @RoleRequired({1})
     public ResponseEntity<Object> deleteMerchantProductCategory(@PathVariable Integer categoryId) {
-        return ResponseUtil.success(productService.deleteMerchantProductCategory(categoryId));
+        if (productService.deleteMerchantProductCategory(categoryId)) {
+            return ResponseUtil.success("Product category deleted.");
+        } else {
+            return ResponseUtil.error("Product category not deleted.");
+        }
     }
 
     /**
