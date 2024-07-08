@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductVO getMerchantProductVOByproductId(Integer productId) {
         MerchantProduct merchantProduct = merchantProductMapper.selectById(productId);
-        MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(productId);
+        MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getCategoryId());
         return new ProductVO(merchantProduct, merchantProductCategory);
     }
     public List<ProductVO> getMerchantProductVOListByMerchantId(Integer merchantId) {
