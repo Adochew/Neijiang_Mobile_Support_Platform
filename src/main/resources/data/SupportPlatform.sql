@@ -209,15 +209,16 @@ CREATE TABLE user_info (
     name VARCHAR(255),
     email VARCHAR(255),
     phone VARCHAR(20),
+    image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (account_id) REFERENCES system_account(account_id) ON DELETE CASCADE
 );
 -- 插入user_info
-INSERT INTO user_info (account_id, name, email, phone) VALUES
-(3, '用户一', 'user1@example.com', '0987654321'),
-(4, '用户二', 'user2@example.com', '1234567890'),
-(5, '用户三', 'user3@example.com', '1122334455'),
-(6, '用户四', 'user4@example.com', '6677889900');
+INSERT INTO user_info (account_id, name, email, phone, image_url) VALUES
+(3, '用户一', 'user1@example.com', '0987654321', 'example.jpg'),
+(4, '用户二', 'user2@example.com', '1234567890', 'example.jpg'),
+(5, '用户三', 'user3@example.com', '1122334455', 'example.jpg'),
+(6, '用户四', 'user4@example.com', '6677889900', 'example.jpg');
 
 -- user_friend 用户好友表
 CREATE TABLE user_friend (
