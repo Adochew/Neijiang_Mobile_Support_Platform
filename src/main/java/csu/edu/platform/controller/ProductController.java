@@ -1,5 +1,6 @@
 package csu.edu.platform.controller;
 
+import com.alibaba.fastjson.JSON;
 import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantProductCategory;
@@ -59,7 +60,8 @@ public class ProductController {
 
     @PostMapping("/merchants/{merchantId}/search")
     public ResponseEntity<Object> getMerchantProductsByMerchantIdAndKeyword(@PathVariable Integer merchantId,
-                                                                            @RequestBody String keyword) {
+                                                                            @RequestBody String request) {
+        String keyword = JSON.parseObject(request).getString("keyword");
         return ResponseUtil.success(productService.getMerchantProductVOListByMerchantIdAndKeyword(merchantId, keyword));
     }
 

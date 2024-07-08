@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.alibaba.fastjson.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,11 +113,12 @@ public class AccountController {
 
     /**
      * 搜索账户的接口，通过关键词搜索相关的账户信息。
-     * @param keyword 搜索关键词
+     * @param request 搜索关键词
      * @return 符合关键词的账户信息
      */
     @PostMapping("/search")
-    public ResponseEntity<Object> searchAccount(@RequestBody String keyword) {
+    public ResponseEntity<Object> searchAccount(@RequestBody String request) {
+        String keyword = JSON.parseObject(request).getString("keyword");
         return ResponseUtil.success(accountService.getSystemAccountListByKeyword(keyword));
     }
 }

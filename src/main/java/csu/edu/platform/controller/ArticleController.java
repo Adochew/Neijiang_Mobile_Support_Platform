@@ -1,5 +1,6 @@
 package csu.edu.platform.controller;
 
+import com.alibaba.fastjson.JSON;
 import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.SystemArticleCategory;
 import csu.edu.platform.service.ArticleService;
@@ -37,11 +38,12 @@ public class ArticleController {
 
     /**
      * 根据关键词获取文章的接口。
-     * @param keyword 文章标题关键词。
+     * @param request 文章标题关键词。
      * @return 指定的文章列表。
      */
     @PostMapping("/search")
-    public ResponseEntity<Object> searchArticle(@RequestBody String keyword) {
+    public ResponseEntity<Object> searchArticle(@RequestBody String request) {
+        String keyword = JSON.parseObject(request).getString("keyword");
         return ResponseUtil.success(articleService.getArticleVOListByKeyword(keyword));
     }
 
