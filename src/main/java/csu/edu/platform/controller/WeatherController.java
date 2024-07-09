@@ -25,7 +25,7 @@ public class WeatherController {
     public ResponseEntity<Object> getWeatherByLocation(@RequestParam String location) {
         try {
             String weatherInfo = weatherForecastService.getWeatherByName(location);
-            return ResponseUtil.success(WeatherDataExtractorUtil.extractDataAsJson(weatherInfo));
+            return ResponseUtil.success(WeatherDataExtractorUtil.extractFields(weatherInfo));
         } catch (Exception e) {
             return ResponseUtil.error("Failed to get weather info", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
