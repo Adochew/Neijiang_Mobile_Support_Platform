@@ -1,36 +1,49 @@
 package csu.edu.platform.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherDataExtractorUtil {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    public static JSONObject extractFields(String jsonString) {
+        JSONObject jsonObject = JSON.parseObject(jsonString);
 
-    public static String extractDataAsJson(String jsonString) throws JsonProcessingException {
-        JsonNode rootNode = objectMapper.readTree(jsonString);
-        JsonNode hoursNode = rootNode.path("hours");
+        JSONObject result = new JSONObject();
+        result.put("date", jsonObject.getString("date"));
+        result.put("week", jsonObject.getString("week"));
+        result.put("city", jsonObject.getString("city"));
+        result.put("wea", jsonObject.getString("wea"));
+        result.put("tem", jsonObject.getDouble("tem").intValue()); // Convert to integer
+        result.put("tem1", jsonObject.getDouble("tem1").intValue()); // Convert to integer
+        result.put("tem2", jsonObject.getDouble("tem2").intValue()); // Convert to integer
+        result.put("win", jsonObject.getString("win"));
+        result.put("win_speed", jsonObject.getString("win_speed"));
+        result.put("humidity", jsonObject.getString("humidity"));
+        result.put("visibility", jsonObject.getString("visibility"));
+        result.put("pressure", jsonObject.getString("pressure"));
+        result.put("air_level", jsonObject.getString("air_level"));
+        result.put("air_tips", jsonObject.getString("air_tips"));
 
-        ArrayNode hoursArray = objectMapper.createArrayNode();
-        ArrayNode weaArray = objectMapper.createArrayNode();
-        ArrayNode temArray = objectMapper.createArrayNode();
+        JSONArray hoursArray = jsonObject.getJSONArray("hours");
+        List<String> hoursList = new ArrayList<>();
+        List<String> weaList = new ArrayList<>();
+        List<Integer> temList = new ArrayList<>();
 
-        if (hoursNode.isArray()) {
-            for (JsonNode hourNode : hoursNode) {
-                hoursArray.add(hourNode.path("hours").asText());
-                weaArray.add(hourNode.path("wea").asText());
-                temArray.add(hourNode.path("tem").asText());
-            }
+        for (int i = 0; i < hoursArray.size(); i++) {
+            JSONObject hourObject = hoursArray.getJSONObject(i);
+            hoursList.add(hourObject.getString("hours"));
+            weaList.add(hourObject.getString("wea"));
+            temList.add(hourObject.getDouble("tem").intValue()); // Convert to integer
         }
 
-        ObjectNode resultNode = objectMapper.createObjectNode();
-        resultNode.set("hours", hoursArray);
-        resultNode.set("wea", weaArray);
-        resultNode.set("tem", temArray);
+        result.put("hours", hoursList);
+        result.put("wea", weaList);
+        result.put("tem", temList);
 
-        return objectMapper.writeValueAsString(resultNode);
+        return result;
     }
 }
