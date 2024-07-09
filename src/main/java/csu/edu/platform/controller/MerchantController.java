@@ -153,9 +153,9 @@ public class MerchantController {
     }
 
     /**
-     * 更新商品图片
-     * @param merchantId 商品ID
-     * @param image 商品图片
+     * 更新商户图片
+     * @param merchantId 商户ID
+     * @param image 商户图片
      * @return 更新结果
      */
     @PostMapping("/images/{merchantId}")
