@@ -94,9 +94,9 @@ public class GroupController {
     }
 
     /**
-     * 更新商品图片
-     * @param groupId 商品ID
-     * @param image 商品图片
+     * 更新群组图片
+     * @param groupId 群组ID
+     * @param image 群组图片
      * @return 更新结果
      */
     @PostMapping("/images/{groupId}")
