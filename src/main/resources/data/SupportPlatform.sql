@@ -342,17 +342,19 @@ INSERT INTO group_member (group_id, account_id, role) VALUES
 -- group_history 群组信息历史表
 CREATE TABLE group_history (
     history_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT,
     group_id INT,
     action VARCHAR(255),
     details TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE
+    FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES system_account(account_id)
 );
 -- 插入group_history
-INSERT INTO group_history (group_id, action, details) VALUES
-(1, '创建群组', '群组创建'),
-(1, '添加成员', '添加了用户'),
-(2, '创建群组', '群组创建'),
-(2, '添加成员', '添加了用户');
+INSERT INTO group_history (group_id, account_id, action, details) VALUES
+(1, 2, 'common', '群组创建'),
+(1, 5, 'common', '添加了用户'),
+(2, 2, 'common', '群组创建'),
+(2, 6, 'common', '添加了用户');
 
 SET FOREIGN_KEY_CHECKS = 1;
