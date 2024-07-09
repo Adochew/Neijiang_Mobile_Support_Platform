@@ -46,7 +46,7 @@ public class AccountController {
 
         Map<String, Object> result = new HashMap<>();
         result.put("token", jwt);
-        result.put("roleId", account.getAccountId());
+        result.put("roleId", account.getRoleId());
         result.put("accountId", account.getAccountId());
         return ResponseUtil.success(result);
     }
