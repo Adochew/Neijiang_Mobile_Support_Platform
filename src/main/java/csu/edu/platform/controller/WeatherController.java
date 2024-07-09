@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class WeatherController {
     @Autowired
     private WeatherForecastService weatherForecastService;
+
     @GetMapping("/forecast")
     @Operation(summary = "地址转天气", description = "地址转详细天气")
     @Parameter(name = "location", example = "天心区")

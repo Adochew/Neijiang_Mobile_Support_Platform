@@ -101,7 +101,8 @@ public class UserController {
     @PostMapping("/images/{userId}")
     public ResponseEntity<Object> addUserInfoImage(@PathVariable Integer userId,
                                                    @RequestParam MultipartFile image) {
-        String url = ossService.updateFile(UserService.class, userId, image, UUID.randomUUID().toString());
+        String fileName = "user/" + UUID.randomUUID();
+        String url = ossService.updateFile(UserService.class, userId, image, fileName);
         return ResponseUtil.success(url);
     }
 
