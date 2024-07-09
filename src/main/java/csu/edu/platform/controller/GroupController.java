@@ -71,7 +71,7 @@ public class GroupController {
      * @return 添加结果
      */
     @PostMapping("")
-    public ResponseEntity<Object> addGroupInfo(@RequestPart GroupInfo groupInfo) {
+    public ResponseEntity<Object> addGroupInfo(@RequestBody GroupInfo groupInfo) {
         if (groupService.addGroupInfo(groupInfo)) {
             return ResponseUtil.success("GroupInfo added.");
         } else {
@@ -85,7 +85,7 @@ public class GroupController {
      * @return 更新结果
      */
     @PutMapping("")
-    public ResponseEntity<Object> updateGroupInfo(@RequestPart GroupInfo groupInfo) {
+    public ResponseEntity<Object> updateGroupInfo(@RequestBody GroupInfo groupInfo) {
         if (groupService.updateGroupInfo(groupInfo)) {
             return ResponseUtil.success("GroupInfo updated.");
         } else {

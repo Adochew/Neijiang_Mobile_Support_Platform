@@ -133,7 +133,7 @@ public class ProductController {
      */
     @PostMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> addMerchantProduct(@RequestPart ProductVO productVO) {
+    public ResponseEntity<Object> addMerchantProduct(@RequestBody ProductVO productVO) {
         if (productService.addMerchantProduct(productVO)){
             return ResponseUtil.success("Merchant product added.");
         } else {
@@ -148,7 +148,7 @@ public class ProductController {
      */
     @PutMapping("")
     @RoleRequired({2})
-    public ResponseEntity<Object> updateMerchantProduct(@RequestPart ProductVO productVO) {
+    public ResponseEntity<Object> updateMerchantProduct(@RequestBody ProductVO productVO) {
         if (productService.updateMerchantProduct(productVO)){
             return ResponseUtil.success("Merchant product updated.");
         } else {
