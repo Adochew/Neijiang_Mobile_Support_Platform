@@ -161,7 +161,8 @@ public class MerchantController {
     @PostMapping("/images/{merchantId}")
     public ResponseEntity<Object> addMerchantImage(@PathVariable Integer merchantId,
                                                    @RequestParam MultipartFile image) {
-        String url = ossService.updateFile(MerchantService.class, merchantId, image, UUID.randomUUID().toString());
+        String fileName = "merchant/" + UUID.randomUUID();
+        String url = ossService.updateFile(MerchantService.class, merchantId, image, fileName);
         return ResponseUtil.success(url);
     }
 

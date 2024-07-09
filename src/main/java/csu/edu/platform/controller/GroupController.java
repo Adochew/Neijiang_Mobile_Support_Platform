@@ -102,7 +102,8 @@ public class GroupController {
     @PostMapping("/images/{groupId}")
     public ResponseEntity<Object> addGroupImage(@PathVariable Integer groupId,
                                                 @RequestParam MultipartFile image) {
-        String url = ossService.updateFile(GroupService.class, groupId, image, UUID.randomUUID().toString());
+        String fileName = "group/" + UUID.randomUUID();
+        String url = ossService.updateFile(GroupService.class, groupId, image, fileName);
         return ResponseUtil.success(url);
     }
 

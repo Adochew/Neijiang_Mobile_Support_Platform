@@ -1,7 +1,6 @@
 package csu.edu.platform.vo;
 
 import csu.edu.platform.entity.UserFriend;
-import csu.edu.platform.entity.UserFriendApplication;
 import csu.edu.platform.entity.UserFriendCategory;
 import lombok.Data;
 import lombok.NoArgsConstructor;
