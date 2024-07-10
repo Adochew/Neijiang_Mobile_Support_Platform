@@ -87,9 +87,19 @@ public class MerchantController {
      * @param merchantId 商户ID
      * @return 商户信息
      */
-    @GetMapping("/{merchantId}")
+    @GetMapping("/merchantId/{merchantId}")
     public ResponseEntity<Object> getMerchantByMerchantId(@PathVariable Integer merchantId){
         return ResponseUtil.success(merchantService.getMerchantVOByMerchantId(merchantId));
+    }
+
+    /**
+     * 根据账号ID获取商户信息
+     * @param accountId 账号ID
+     * @return 商户信息
+     */
+    @GetMapping("/accountId/{accountId}")
+    public ResponseEntity<Object> getMerchantByAccountId(@PathVariable Integer accountId){
+        return ResponseUtil.success(merchantService.getMerchantVOByAccountId(accountId));
     }
 
     /**

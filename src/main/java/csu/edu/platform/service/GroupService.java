@@ -3,6 +3,7 @@ package csu.edu.platform.service;
 import csu.edu.platform.entity.GroupHistory;
 import csu.edu.platform.entity.GroupInfo;
 import csu.edu.platform.entity.GroupMember;
+import csu.edu.platform.vo.ChatVO;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface GroupService {
     Boolean updateGroupInfo(GroupInfo groupInfo);
     Boolean deleteGroupInfo(Integer groupId);
 
-    List<GroupMember> getGroupMemberByGroupId(Integer groupId);
+    List<ChatVO> getGroupMemberByGroupId(Integer groupId);
     Boolean addGroupMember(GroupMember groupMember);
     Boolean deleteGroupMember(GroupMember groupMember);
 

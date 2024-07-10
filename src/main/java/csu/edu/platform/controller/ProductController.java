@@ -106,10 +106,21 @@ public class ProductController {
      * @param merchantId 商户ID
      * @return 商品信息
      */
-    @GetMapping("/merchants/{merchantId}")
+    @GetMapping("/merchants/merchantId/{merchantId}")
     public ResponseEntity<Object> getMerchantProductsByMerchantId(@PathVariable Integer merchantId) {
         return ResponseUtil.success(productService.getMerchantProductVOListByMerchantId(merchantId));
     }
+
+    /**
+     * 根据商户ID获取商品信息
+     * @param accountId 商户ID
+     * @return 商品信息
+     */
+    @GetMapping("/merchants/accountId/{accountId}")
+    public ResponseEntity<Object> getMerchantProductsByAccountId(@PathVariable Integer accountId) {
+        return ResponseUtil.success(productService.getMerchantProductVOListByAccountId(accountId));
+    }
+
 
     /**
      * 根据商户ID和商品类别ID获取商品信息

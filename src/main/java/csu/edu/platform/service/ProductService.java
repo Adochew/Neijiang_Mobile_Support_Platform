@@ -17,6 +17,7 @@ public interface ProductService {
 
     ProductVO getMerchantProductVOByproductId(Integer productId);
     List<ProductVO> getMerchantProductVOListByMerchantId(Integer merchantId);
+    List<ProductVO> getMerchantProductVOListByAccountId(Integer accountId);
     List<ProductVO> getMerchantProductVOListByMerchantIdAndCategoryId(Integer merchantId, Integer categoryId);
     List<ProductVO> getMerchantProductVOListByMerchantIdAndKeyword(Integer MerchantId, String keyword);
     Boolean addMerchantProduct(ProductVO productVO);

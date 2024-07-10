@@ -41,8 +41,8 @@ public class WeatherDataExtractorUtil {
         }
 
         result.put("hours", hoursList);
-        result.put("wea", weaList);
-        result.put("tem", temList);
+        result.put("weas", weaList);
+        result.put("tems", temList);
 
         return result;
     }

@@ -43,7 +43,12 @@ public class AccountController {
         map.put("accountId", account.getAccountId());
         map.put("roleId", account.getRoleId());
         String jwt = JWTUtil.generateJwt(map);
-        return ResponseUtil.success(jwt);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("token", jwt);
+        result.put("roleId", account.getRoleId());
+        result.put("accountId", account.getAccountId());
+        return ResponseUtil.success(result);
     }
 
     /**

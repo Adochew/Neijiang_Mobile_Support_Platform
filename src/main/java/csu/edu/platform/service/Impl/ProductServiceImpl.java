@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import csu.edu.platform.entity.MerchantInfo;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantProductCategory;
-import csu.edu.platform.persistence.MerchantCommentMapper;
-import csu.edu.platform.persistence.MerchantProductCategoryMapper;
-import csu.edu.platform.persistence.MerchantProductCommentMapper;
-import csu.edu.platform.persistence.MerchantProductMapper;
+import csu.edu.platform.persistence.*;
 import csu.edu.platform.service.ProductService;
 import csu.edu.platform.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
+    @Autowired
+    private MerchantInfoMapper merchantInfoMapper;
     @Autowired
     private MerchantProductMapper merchantProductMapper;
     @Autowired
@@ -72,6 +71,21 @@ public class ProductServiceImpl implements ProductService {
         QueryWrapper<MerchantProduct> queryWrapper = new QueryWrapper<MerchantProduct>();
         queryWrapper.eq("merchant_id", merchantId);
         List<MerchantProduct> merchantProductList = merchantProductMapper.selectList(queryWrapper);
+        List<ProductVO> productVOList = new ArrayList<ProductVO>();
+        for (MerchantProduct merchantProduct : merchantProductList) {
+            MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getProductId());
+            ProductVO productVO = new ProductVO(merchantProduct, merchantProductCategory);
+            productVOList.add(productVO);
+        }
+        return productVOList;
+    }
+    public List<ProductVO> getMerchantProductVOListByAccountId(Integer accountId){
+        QueryWrapper<MerchantInfo> queryWrapper1 = new QueryWrapper<MerchantInfo>();
+        queryWrapper1.eq("owner_id", accountId);
+        MerchantInfo merchantInfo = merchantInfoMapper.selectOne(queryWrapper1);
+        QueryWrapper<MerchantProduct> queryWrapper2 = new QueryWrapper<MerchantProduct>();
+        queryWrapper2.eq("merchant_id", merchantInfo.getMerchantId());
+        List<MerchantProduct> merchantProductList = merchantProductMapper.selectList(queryWrapper2);
         List<ProductVO> productVOList = new ArrayList<ProductVO>();
         for (MerchantProduct merchantProduct : merchantProductList) {
             MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getProductId());
