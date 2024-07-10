@@ -360,9 +360,9 @@ public class UserController {
      * @param productId 商品ID
      * @return 是否收藏
      */
-    @GetMapping("/favorite_merchants/{userId}/{productId}")
+    @GetMapping("/favorite_products/{userId}/{productId}")
     public ResponseEntity<Object> checkUserFavoriteProducts(@PathVariable Integer userId,
-                                                             @PathVariable Integer productId) {
+                                                            @PathVariable Integer productId) {
         UserFavoriteProduct userFavoriteProduct = new UserFavoriteProduct();
         userFavoriteProduct.setUserId(userId);
         userFavoriteProduct.setProductId(productId);
