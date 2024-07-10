@@ -1,13 +1,16 @@
 package csu.edu.platform.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import csu.edu.platform.entity.GroupHistory;
-import csu.edu.platform.entity.GroupInfo;
-import csu.edu.platform.entity.GroupMember;
+import csu.edu.platform.entity.*;
 import csu.edu.platform.persistence.GroupHistoryMapper;
 import csu.edu.platform.persistence.GroupInfoMapper;
 import csu.edu.platform.persistence.GroupMemberMapper;
+import csu.edu.platform.service.AccountService;
 import csu.edu.platform.service.GroupService;
+import csu.edu.platform.service.MerchantService;
+import csu.edu.platform.service.UserService;
+import csu.edu.platform.vo.ChatVO;
+import csu.edu.platform.vo.MerchantVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,12 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
     @Autowired
     private GroupInfoMapper groupInfoMapper;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MerchantService merchantService;
     @Autowired
     private GroupMemberMapper groupMemberMapper;
     @Autowired
@@ -63,10 +72,28 @@ public class GroupServiceImpl implements GroupService {
         return groupInfoMapper.deleteById(groupId) != 0;
     }
 
-    public List<GroupMember> getGroupMemberByGroupId(Integer groupId) {
+    public List<ChatVO> getGroupMemberByGroupId(Integer groupId) {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("group_id", groupId);
-        return groupMemberMapper.selectList(queryWrapper);
+        List<ChatVO> chatVOList = new ArrayList<>();
+        for(GroupMember groupMember :groupMemberMapper.selectList(queryWrapper)){
+            SystemAccount systemAccount = accountService.getSystemAccountByAccountId(groupMember.getAccountId());
+            String name;
+            String imageUrl;
+            if(systemAccount.getRoleId() == 2){
+                MerchantVO merchantVO = merchantService.getMerchantVOByAccountId(systemAccount.getAccountId());
+                name = merchantVO.getName();
+                imageUrl = merchantVO.getImageUrl();
+            }
+            else{
+                UserInfo userInfo = userService.getUserInfoByAccountId(systemAccount.getAccountId());
+                name = userInfo.getName();
+                imageUrl = userInfo.getImageUrl();
+            }
+            ChatVO chatVO = new ChatVO(groupMember, name, imageUrl);
+            chatVOList.add(chatVO);
+        }
+        return chatVOList;
     }
     public Boolean addGroupMember(GroupMember groupMember) {
         return groupMemberMapper.insert(groupMember) != 0;
