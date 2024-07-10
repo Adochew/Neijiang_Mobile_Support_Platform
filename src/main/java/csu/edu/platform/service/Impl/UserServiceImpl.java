@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
     public Integer checkUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant) {
         QueryWrapper<UserFavoriteMerchant> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userFavoriteMerchant.getUserId());
-        queryWrapper.eq("favorite_merchant_id", userFavoriteMerchant.getMerchantId());
+        queryWrapper.eq("merchant_id", userFavoriteMerchant.getMerchantId());
         UserFavoriteMerchant favoriteMerchant = userFavoriteMerchantMapper.selectOne(queryWrapper);
         if(favoriteMerchant != null){
             return favoriteMerchant.getFavoriteId();
