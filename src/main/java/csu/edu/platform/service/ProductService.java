@@ -10,6 +10,7 @@ public interface ProductService {
     Boolean setImageUrl(Integer productId, String imageUrl);
 
     List<MerchantProductCategory> getMerchantProductCategoryList();
+    List<MerchantProductCategory> getMerchantProductCategoryListByMerchantId(Integer merchantId);
     Boolean addMerchantProductCategory(MerchantProductCategory merchantProductCategory);
     Boolean updateMerchantProductCategory(MerchantProductCategory merchantProductCategory);
     Boolean deleteMerchantProductCategory(Integer categoryId);

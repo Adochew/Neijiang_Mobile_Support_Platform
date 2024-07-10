@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
@@ -33,6 +35,23 @@ public class ProductServiceImpl implements ProductService {
     public List<MerchantProductCategory> getMerchantProductCategoryList() {
         return merchantProductCategoryMapper.selectList(null);
     }
+
+    @Override
+    public List<MerchantProductCategory> getMerchantProductCategoryListByMerchantId(Integer merchantId) {
+        QueryWrapper<MerchantProduct> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("merchant_id", merchantId);
+        List<MerchantProduct> merchantProducts = merchantProductMapper.selectList(queryWrapper);
+
+        List<Integer> distinctCategoryIdList = merchantProducts.stream()
+                .map(MerchantProduct::getCategoryId).distinct().collect(Collectors.toList());
+
+        List<MerchantProductCategory> merchantProductCategoryList = new ArrayList<>();
+        for (Integer categoryId : distinctCategoryIdList) {
+            merchantProductCategoryList.add(merchantProductCategoryMapper.selectById(categoryId));
+        }
+        return merchantProductCategoryList;
+    }
+
     public Boolean addMerchantProductCategory(MerchantProductCategory merchantProductCategory) {
         return merchantProductCategoryMapper.insert(merchantProductCategory) != 0;
     }

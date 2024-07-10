@@ -300,6 +300,21 @@ public class UserController {
     }
 
     /**
+     * 检查用户是否收藏商户
+     * @param userId 用户ID
+     * @param merchantId 商户ID
+     * @return 是否收藏
+     */
+    @GetMapping("/favorite_merchants/{userId}/{merchantId}")
+    public ResponseEntity<Object> checkUserFavoriteMerchants(@PathVariable Integer userId,
+                                                             @PathVariable Integer merchantId) {
+        UserFavoriteMerchant userFavoriteMerchant = new UserFavoriteMerchant();
+        userFavoriteMerchant.setUserId(userId);
+        userFavoriteMerchant.setMerchantId(merchantId);
+        return ResponseUtil.success(userService.checkUserFavoriteMerchant(userFavoriteMerchant));
+    }
+
+    /**
      * 添加收藏的商户
      * @param userFavoriteMerchant 收藏的商户实体
      * @return 添加结果
@@ -337,6 +352,21 @@ public class UserController {
     @GetMapping("/favorite_products/{userId}")
     public ResponseEntity<Object> getUserFavoriteProducts(@PathVariable Integer userId) {
         return ResponseUtil.success(userService.getUserFavoriteProductListByUserId(userId));
+    }
+
+    /**
+     * 检查用户是否收藏商品
+     * @param userId 用户ID
+     * @param productId 商品ID
+     * @return 是否收藏
+     */
+    @GetMapping("/favorite_products/{userId}/{productId}")
+    public ResponseEntity<Object> checkUserFavoriteProducts(@PathVariable Integer userId,
+                                                            @PathVariable Integer productId) {
+        UserFavoriteProduct userFavoriteProduct = new UserFavoriteProduct();
+        userFavoriteProduct.setUserId(userId);
+        userFavoriteProduct.setProductId(productId);
+        return ResponseUtil.success(userService.createUserFavoriteProduct(userFavoriteProduct));
     }
 
     /**

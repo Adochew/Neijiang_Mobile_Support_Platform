@@ -153,6 +153,20 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("user_id", userId);
         return userFavoriteMerchantMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public Integer checkUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant) {
+        QueryWrapper<UserFavoriteMerchant> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userFavoriteMerchant.getUserId());
+        queryWrapper.eq("merchant_id", userFavoriteMerchant.getMerchantId());
+        UserFavoriteMerchant favoriteMerchant = userFavoriteMerchantMapper.selectOne(queryWrapper);
+        if(favoriteMerchant != null){
+            return favoriteMerchant.getFavoriteId();
+        } else {
+            return 0;
+        }
+    }
+
     public Boolean addUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant) {
         return userFavoriteMerchantMapper.insert(userFavoriteMerchant) != 0;
     }
@@ -165,6 +179,20 @@ public class UserServiceImpl implements UserService {
         queryWrapper.eq("user_id", userId);
         return userFavoriteProductMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public Integer createUserFavoriteProduct(UserFavoriteProduct userFavoriteProduct) {
+        QueryWrapper<UserFavoriteProduct> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userFavoriteProduct.getUserId());
+        queryWrapper.eq("product_id", userFavoriteProduct.getProductId());
+        UserFavoriteProduct favoriteProduct = userFavoriteProductMapper.selectOne(queryWrapper);
+        if(favoriteProduct != null){
+            return favoriteProduct.getFavoriteId();
+        } else {
+            return 0;
+        }
+    }
+
     public Boolean addUserFavoriteProduct(UserFavoriteProduct userFavoriteProduct) {
         return userFavoriteProductMapper.insert(userFavoriteProduct) != 0;
     }
