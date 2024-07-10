@@ -33,12 +33,12 @@ public interface UserService{
     Boolean deleteUserFriend(UserFriend userFriend);
 
     List<UserFavoriteMerchant> getUserFavoriteMerchantListByUserId(Integer userId);
-    Boolean checkUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant);
+    Integer checkUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant);
     Boolean addUserFavoriteMerchant(UserFavoriteMerchant userFavoriteMerchant);
     Boolean deleteUserFavoriteMerchant(Integer favoriteId);
 
     List<UserFavoriteProduct> getUserFavoriteProductListByUserId(Integer userId);
-    Boolean createUserFavoriteProduct(UserFavoriteProduct userFavoriteProduct);
+    Integer createUserFavoriteProduct(UserFavoriteProduct userFavoriteProduct);
     Boolean addUserFavoriteProduct(UserFavoriteProduct userFavoriteProduct);
     Boolean deleteUserFavoriteProduct(Integer favoriteId);
 }
