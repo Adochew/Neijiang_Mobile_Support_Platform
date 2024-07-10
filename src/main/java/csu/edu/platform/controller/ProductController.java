@@ -37,6 +37,16 @@ public class ProductController {
     }
 
     /**
+     * 获取制定商家所有商品类别
+     * @param merchantId 商家Id
+     * @return 所有商品类别的列表
+     */
+    @GetMapping("/categories/merchants/{merchantId}")
+    public ResponseEntity<Object> getAllMerchantProductCategoriesByMerchantId(@PathVariable Integer merchantId) {
+        return ResponseUtil.success(productService.getMerchantProductCategoryListByMerchantId(merchantId));
+    }
+
+    /**
      * 添加商品类别
      * @param productCategory 商品类别实体
      * @return 添加结果
