@@ -46,6 +46,13 @@ public class MerchantServiceImpl implements MerchantService {
         MerchantCategory merchantCategory = merchantCategoryMapper.selectById(merchantInfo.getCategoryId());
         return new MerchantVO(merchantInfo, merchantCategory);
     }
+    public MerchantVO getMerchantVOByAccountId(Integer accountId){
+        QueryWrapper<MerchantInfo> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("owner_id", accountId);
+        MerchantInfo merchantInfo = merchantInfoMapper.selectOne(queryWrapper1);
+        MerchantCategory merchantCategory = merchantCategoryMapper.selectById(merchantInfo.getCategoryId());
+        return new MerchantVO(merchantInfo, merchantCategory);
+    }
     public List<MerchantVO> getMerchantVOList() {
         List<MerchantInfo> merchantInfoList = merchantInfoMapper.selectList(null);
         List<MerchantVO> merchantVOList = new ArrayList<>();

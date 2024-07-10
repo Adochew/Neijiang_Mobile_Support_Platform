@@ -16,6 +16,7 @@ public interface MerchantService {
     Boolean deleteMerchantCategory(Integer categoryId);
 
     MerchantVO getMerchantVOByMerchantId(Integer merchantId);
+    MerchantVO getMerchantVOByAccountId(Integer accountId);
     List<MerchantVO> getMerchantVOList();
     List<MerchantVO> getMerchantVOListByCategoryId(Integer categoryId);
     List<MerchantVO> getMerchantVOListByKeyword(String keyword);
@@ -27,4 +28,5 @@ public interface MerchantService {
     Boolean addMerchantPromotion(MerchantPromotion merchantPromotion);
     Boolean updateMerchantPromotion(MerchantPromotion merchantPromotion);
     Boolean deleteMerchantPromotion(Integer promotionId);
+
 }
