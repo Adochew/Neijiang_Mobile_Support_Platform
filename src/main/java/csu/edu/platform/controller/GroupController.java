@@ -51,7 +51,6 @@ public class GroupController {
      */
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<Object> getGroupInfoByAccountId(@PathVariable Integer accountId) {
-        System.out.println("qqq");
         return ResponseUtil.success(groupService.getGroupInfoListByAccountId(accountId));
     }
 
