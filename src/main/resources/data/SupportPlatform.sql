@@ -64,7 +64,23 @@ CREATE TABLE system_article (
 );
 -- 插入system_article
 INSERT INTO system_article (title, content, category_id, author_id) VALUES
-('2024年技术趋势', '关于2024年技术趋势的内容', 1, 1),
+('2024年技术趋势', '# This is the Title of the Article
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+
+## Subheading
+More content here...
+
+- First item
+- Second item
+- Third item
+
+Another paragraph with an image:
+
+![Placeholder Image](https://via.placeholder.com/150)', 1, 1),
 ('瑜伽的健康益处', '关于瑜伽的内容', 2, 1),
 ('投资理财技巧', '关于投资理财的内容', 3, 1),
 ('在线教育的未来', '关于在线教育的内容', 4, 1);
@@ -215,10 +231,10 @@ CREATE TABLE user_info (
 );
 -- 插入user_info
 INSERT INTO user_info (account_id, name, email, phone, image_url) VALUES
-(3, '用户一', 'user1@example.com', '0987654321', 'example.jpg'),
-(4, '用户二', 'user2@example.com', '1234567890', 'example.jpg'),
-(5, '用户三', 'user3@example.com', '1122334455', 'example.jpg'),
-(6, '用户四', 'user4@example.com', '6677889900', 'example.jpg');
+(3, '用户一', 'user1@example.com', '0987654321', 'man.png'),
+(4, '用户二', 'user2@example.com', '1234567890', 'cat.png'),
+(5, '用户三', 'user3@example.com', '1122334455', 'panda.png'),
+(6, '用户四', 'user4@example.com', '6677889900', 'user.png');
 
 -- user_friend 用户好友表
 CREATE TABLE user_friend (

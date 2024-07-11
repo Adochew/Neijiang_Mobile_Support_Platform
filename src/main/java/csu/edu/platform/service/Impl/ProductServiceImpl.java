@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         List<MerchantProduct> merchantProductList = merchantProductMapper.selectList(queryWrapper);
         List<ProductVO> productVOList = new ArrayList<ProductVO>();
         for (MerchantProduct merchantProduct : merchantProductList) {
-            MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getProductId());
+            MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getCategoryId());
             ProductVO productVO = new ProductVO(merchantProduct, merchantProductCategory);
             productVOList.add(productVO);
         }
@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
         List<MerchantProduct> merchantProductList = merchantProductMapper.selectList(queryWrapper2);
         List<ProductVO> productVOList = new ArrayList<ProductVO>();
         for (MerchantProduct merchantProduct : merchantProductList) {
-            MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getProductId());
+            MerchantProductCategory merchantProductCategory = merchantProductCategoryMapper.selectById(merchantProduct.getCategoryId());
             ProductVO productVO = new ProductVO(merchantProduct, merchantProductCategory);
             productVOList.add(productVO);
         }

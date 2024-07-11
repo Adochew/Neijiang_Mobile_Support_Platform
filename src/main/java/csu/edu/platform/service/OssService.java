@@ -6,4 +6,5 @@ public interface OssService {
     String uploadFile(MultipartFile file, String fileName);
     Boolean deleteFile(String fileUrl);
     String updateFile(Class<?> serviceClass, Integer id, MultipartFile file, String fileName);
+    public  String uploadFileFromUrl(String imageUrl);
 }
