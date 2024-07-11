@@ -51,6 +51,7 @@ public class GroupController {
      */
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<Object> getGroupInfoByAccountId(@PathVariable Integer accountId) {
+        System.out.println("qqq");
         return ResponseUtil.success(groupService.getGroupInfoListByAccountId(accountId));
     }
 
@@ -140,6 +141,7 @@ public class GroupController {
      */
     @PostMapping("/members")
     public ResponseEntity<Object> addGroupMember(@RequestBody GroupMember groupMember) {
+        System.out.println(groupMember);
         if (groupService.addGroupMember(groupMember)) {
             return ResponseUtil.success("GroupMember added.");
         } else {

@@ -371,8 +371,8 @@ CREATE TABLE group_history (
 -- 插入group_history
 INSERT INTO group_history (group_id, account_id, action, details) VALUES
 (1, 2, 'common', '群组创建'),
-(1, 5, 'common', '添加了用户'),
-(2, 2, 'common', '群组创建'),
-(2, 6, 'common', '添加了用户');
+(1, 4, 'common', '添加了用户'),
+(2, 3, 'common', '群组创建'),
+(2, 5, 'common', '添加了用户');
 
 SET FOREIGN_KEY_CHECKS = 1;
