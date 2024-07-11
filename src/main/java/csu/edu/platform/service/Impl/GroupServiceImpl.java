@@ -63,7 +63,14 @@ public class GroupServiceImpl implements GroupService {
         return groupInfoMapper.selectList(queryWrapper);
     }
     public Boolean addGroupInfo(GroupInfo groupInfo) {
-        return groupInfoMapper.insert(groupInfo) != 0;
+        if(groupInfoMapper.insert(groupInfo) != 0){
+            GroupMember groupMember = new GroupMember();
+            groupMember.setGroupId(groupInfo.getGroupId());
+            groupMember.setAccountId(groupInfo.getOwnerId());
+            groupMember.setRole("管理员");
+            return addGroupMember(groupMember);
+        }
+        return false;
     }
     public Boolean updateGroupInfo(GroupInfo groupInfo) {
         return groupInfoMapper.updateById(groupInfo) != 0;

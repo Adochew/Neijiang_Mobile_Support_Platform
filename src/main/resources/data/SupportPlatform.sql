@@ -312,14 +312,16 @@ INSERT INTO user_favorite_product (user_id, product_id) VALUES
 CREATE TABLE group_info (
     group_id INT PRIMARY KEY AUTO_INCREMENT,
     group_name VARCHAR(255),
+    owner_id INT,
     description TEXT,
     image_url VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES system_account(account_id)  ON DELETE CASCADE
 );
 -- 插入group_info
-INSERT INTO group_info (group_id, group_name, description, image_url) VALUES
-(1, '饭友群', '饭友交流讨论群', 'eat_group.jpg'),
-(2, '零售折扣群', '通知零售店打折信息', 'group.jpg');
+INSERT INTO group_info (group_id, group_name, owner_id, description, image_url) VALUES
+(1, '饭友群', 2, '饭友交流讨论群', 'eat_group.jpg'),
+(2, '零售折扣群', 3, '通知零售店打折信息', 'group.jpg');
 
 -- group_member 群组成员表
 CREATE TABLE group_member (

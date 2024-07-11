@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class GroupInfo {
     @TableId(value = "group_id", type = IdType.AUTO)
     private Integer groupId;
+    private Integer ownerId;
     private String groupName;
     private String description;
     private String imageUrl;
