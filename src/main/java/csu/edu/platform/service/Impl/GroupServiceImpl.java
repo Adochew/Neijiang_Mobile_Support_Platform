@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("groupService")
 public class GroupServiceImpl implements GroupService {
@@ -46,17 +48,25 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupInfo> getGroupInfoList(){
         return groupInfoMapper.selectList(null);
     }
-    public List<GroupInfo> getGroupInfoListByAccountId(Integer accountId){
+    public List<GroupInfo> getGroupInfoListByAccountId(Integer accountId) {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);
         List<GroupMember> groupMembers = groupMemberMapper.selectList(queryWrapper);
+        Set<Integer> processedGroupIds = new HashSet<>();
         List<GroupInfo> groupInfoList = new ArrayList<>();
-        for(GroupMember groupMember : groupMembers){
-            GroupInfo groupInfo = groupInfoMapper.selectById(groupMember.getGroupId());
-            groupInfoList.add(groupInfo);
+        for (GroupMember groupMember : groupMembers) {
+            Integer groupId = groupMember.getGroupId();
+            if (!processedGroupIds.contains(groupId)) {
+                GroupInfo groupInfo = groupInfoMapper.selectById(groupId);
+                if (groupInfo != null) {
+                    groupInfoList.add(groupInfo);
+                    processedGroupIds.add(groupId);
+                }
+            }
         }
         return groupInfoList;
     }
+
     public List<GroupInfo> getGroupInfoListByKeyword(String keyword) {
         QueryWrapper<GroupInfo> queryWrapper = new QueryWrapper<GroupInfo>();
         queryWrapper.like("group_name", keyword);
@@ -83,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("group_id", groupId);
         List<ChatVO> chatVOList = new ArrayList<>();
-        for(GroupMember groupMember :groupMemberMapper.selectList(queryWrapper)){
+        for(GroupMember groupMember : groupMemberMapper.selectList(queryWrapper)){
             SystemAccount systemAccount = accountService.getSystemAccountByAccountId(groupMember.getAccountId());
             String name;
             String imageUrl;
