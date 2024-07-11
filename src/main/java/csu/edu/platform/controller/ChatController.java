@@ -35,6 +35,7 @@ public class ChatController {
 
         // 创建群组消息历史记录
         GroupHistory groupHistory = new GroupHistory(from, group, message.getContent());
+        System.out.println(groupHistory);
         groupService.addGroupHistory(groupHistory);
 
         // 向指定群组的所有用户发送消息
