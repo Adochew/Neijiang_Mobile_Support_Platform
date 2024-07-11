@@ -9,8 +9,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.util.UUID;
 
 @Service("ossService")
 public class OssServiceImpl implements OssService {
@@ -106,4 +112,42 @@ public class OssServiceImpl implements OssService {
         }
     }
 
+    public  String uploadFileFromUrl(String imageUrl){
+        try {
+            // 从 URL 中打开输入流
+            URL url = new URL(imageUrl);
+            InputStream inputStream = url.openStream();
+            String path = url.getPath();
+            Path filePath = Path.of(path);
+            String fileName = filePath.getFileName().toString();
+
+            // 获取文件名（包括路径）中的最后一个 '.' 的位置
+            int dotIndex = fileName.lastIndexOf('.');
+
+            String extension = "";
+            // 如果找到了点，并且点后面有字符
+            if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+                // 获取拓展名
+                extension = fileName.substring(dotIndex + 1);
+            }
+            String totalFileName = "article/" + UUID.randomUUID().toString() + "." + extension;
+
+            // 上传文件流到 OSS
+            ossClient.putObject(bucketName, totalFileName, inputStream);
+
+            String uploadedUrl = "https://" + bucketName + "." + endpoint.split("//")[1] + "/" + totalFileName;
+            // 生成上传后的文件访问 URL
+
+            inputStream.close();
+
+            return uploadedUrl;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 关闭 OSS 客户端
+            ossClient.shutdown();
+        }
+    }
 }

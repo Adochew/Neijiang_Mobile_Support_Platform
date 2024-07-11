@@ -1,9 +1,12 @@
 package csu.edu.platform.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.utils.StringUtils;
 import csu.edu.platform.annotation.RoleRequired;
 import csu.edu.platform.entity.SystemArticleCategory;
 import csu.edu.platform.service.ArticleService;
+import csu.edu.platform.service.GroupService;
+import csu.edu.platform.service.Impl.OssServiceImpl;
 import csu.edu.platform.util.ResponseUtil;
 import csu.edu.platform.vo.ArticleVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,12 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private OssServiceImpl ossService;
 
     /**
      * 获取所有文章的接口 
@@ -35,6 +50,31 @@ public class ArticleController {
     @GetMapping("/{articleId}")
     public ResponseEntity<Object> getArticleByArticleId(@PathVariable int articleId) {
         return ResponseUtil.success(articleService.getArticleVOByArticleId(articleId));
+    }
+
+    /**
+     * 将文章中图片的上传到图床
+     * @return url
+     */
+    //适配别的软件写的接口
+    @PostMapping("/images")
+    public ResponseEntity<Map<String, Object>> uploadImage(@RequestBody Map<String, String> requestBody) {
+        String imageUrl = requestBody.get("url");
+
+        // 上传图片到 OSS
+        String uploadedUrl = null;
+        uploadedUrl = ossService.uploadFileFromUrl(imageUrl);
+
+        // 构建返回的 JSON 数据
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("msg", "");
+        responseData.put("code", 0);
+        Map<String, String> data = new HashMap<>();
+        data.put("originalURL", imageUrl);
+        data.put("url", uploadedUrl);
+        responseData.put("data", data);
+
+        return ResponseEntity.ok(responseData);
     }
 
     /**

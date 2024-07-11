@@ -22,7 +22,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     public ArticleVO getArticleVOByArticleId(Integer articleId) {
         SystemArticle systemArticle = systemArticleMapper.selectById(articleId);
-        SystemArticleCategory systemArticleCategory = systemArticleCategoryMapper.selectById(articleId);
+        SystemArticleCategory systemArticleCategory = systemArticleCategoryMapper.selectById(systemArticle.getCategoryId());
         if (systemArticleCategory == null) {
             return null;
         }

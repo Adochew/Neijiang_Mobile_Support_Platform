@@ -64,7 +64,23 @@ CREATE TABLE system_article (
 );
 -- 插入system_article
 INSERT INTO system_article (title, content, category_id, author_id) VALUES
-('2024年技术趋势', '关于2024年技术趋势的内容', 1, 1),
+('2024年技术趋势', '# This is the Title of the Article
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+This is a paragraph of the article. You can include **bold text**, *italic text*, and [links](#).
+
+## Subheading
+More content here...
+
+- First item
+- Second item
+- Third item
+
+Another paragraph with an image:
+
+![Placeholder Image](https://via.placeholder.com/150)', 1, 1),
 ('瑜伽的健康益处', '关于瑜伽的内容', 2, 1),
 ('投资理财技巧', '关于投资理财的内容', 3, 1),
 ('在线教育的未来', '关于在线教育的内容', 4, 1);
@@ -100,7 +116,7 @@ CREATE TABLE merchant_info (
 );
 -- 插入merchant_info
 INSERT INTO merchant_info (merchant_id, owner_id, name, address, phone, email, category_id, business_type, business_environment, business_location, product_category, image_url) VALUES
-(1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'image1.jpg'),
+(1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'https://mobile-support-platform.oss-cn-chengdu.aliyuncs.com/merchant/merchant1.jpg'),
 (2, 3, '商户二', '上海市浦东新区', '0987654321', 'merchant2@example.com', 2, '餐饮', '线下', '中国', '食品', 'image2.jpg'),
 (3, 2, '商户三', '深圳市南山区', '1122334455', 'merchant3@example.com', 3, '服装', '线上线下', '中国', '服务', 'image3.jpg'),
 (4, 3, '商户四', '广州市天河区', '6677889900', 'merchant4@example.com', 3, '服装', '线上', '中国', '服装', 'image4.jpg'),
@@ -121,7 +137,7 @@ CREATE TABLE merchant_product (
 );
 -- 插入merchant_product
 INSERT INTO merchant_product (merchant_id, product_name, category_id, price, description, image_url) VALUES
-(1, '笔记本电脑', 1, 5000.00, '高性能笔记本电脑', 'laptop.jpg'),
+(1, '笔记本电脑', 1, 5000.00, '高性能笔记本电脑', 'https://mobile-support-platform.oss-cn-chengdu.aliyuncs.com/product/product1.jpg'),
 (1, '智能手机', 1, 3000.00, '最新智能手机', 'smartphone.jpg'),
 (2, '牛仔裤', 2, 200.00, '舒适牛仔裤', 'jeans.jpg'),
 (2, 'T恤', 2, 100.00, '纯棉T恤', 'tshirt.jpg');
@@ -215,10 +231,10 @@ CREATE TABLE user_info (
 );
 -- 插入user_info
 INSERT INTO user_info (account_id, name, email, phone, image_url) VALUES
-(3, '用户一', 'user1@example.com', '0987654321', 'example.jpg'),
-(4, '用户二', 'user2@example.com', '1234567890', 'example.jpg'),
-(5, '用户三', 'user3@example.com', '1122334455', 'example.jpg'),
-(6, '用户四', 'user4@example.com', '6677889900', 'example.jpg');
+(3, '用户一', 'user1@example.com', '0987654321', 'man.png'),
+(4, '用户二', 'user2@example.com', '1234567890', 'cat.png'),
+(5, '用户三', 'user3@example.com', '1122334455', 'panda.png'),
+(6, '用户四', 'user4@example.com', '6677889900', 'user.png');
 
 -- user_friend 用户好友表
 CREATE TABLE user_friend (
