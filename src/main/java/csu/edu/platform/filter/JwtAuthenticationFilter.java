@@ -19,7 +19,7 @@ import java.util.List;
 @WebFilter(urlPatterns = "/*")
 public class JwtAuthenticationFilter implements Filter {
 
-    private static final List<String> EXCLUDE_URLS = Arrays.asList("token", "chat", "swagger-ui", "v3/api");
+    private static final List<String> EXCLUDE_URLS = Arrays.asList("token", "chat", "swagger-ui", "v3/api","/articles/images");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
