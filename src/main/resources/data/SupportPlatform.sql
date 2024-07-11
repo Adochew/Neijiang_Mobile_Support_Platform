@@ -100,7 +100,7 @@ CREATE TABLE merchant_info (
 );
 -- 插入merchant_info
 INSERT INTO merchant_info (merchant_id, owner_id, name, address, phone, email, category_id, business_type, business_environment, business_location, product_category, image_url) VALUES
-(1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'image1.jpg'),
+(1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'https://mobile-support-platform.oss-cn-chengdu.aliyuncs.com/merchant/merchant1.jpg'),
 (2, 3, '商户二', '上海市浦东新区', '0987654321', 'merchant2@example.com', 2, '餐饮', '线下', '中国', '食品', 'image2.jpg'),
 (3, 2, '商户三', '深圳市南山区', '1122334455', 'merchant3@example.com', 3, '服装', '线上线下', '中国', '服务', 'image3.jpg'),
 (4, 3, '商户四', '广州市天河区', '6677889900', 'merchant4@example.com', 3, '服装', '线上', '中国', '服装', 'image4.jpg'),
@@ -121,7 +121,7 @@ CREATE TABLE merchant_product (
 );
 -- 插入merchant_product
 INSERT INTO merchant_product (merchant_id, product_name, category_id, price, description, image_url) VALUES
-(1, '笔记本电脑', 1, 5000.00, '高性能笔记本电脑', 'laptop.jpg'),
+(1, '笔记本电脑', 1, 5000.00, '高性能笔记本电脑', 'https://mobile-support-platform.oss-cn-chengdu.aliyuncs.com/product/product1.jpg'),
 (1, '智能手机', 1, 3000.00, '最新智能手机', 'smartphone.jpg'),
 (2, '牛仔裤', 2, 200.00, '舒适牛仔裤', 'jeans.jpg'),
 (2, 'T恤', 2, 100.00, '纯棉T恤', 'tshirt.jpg');
