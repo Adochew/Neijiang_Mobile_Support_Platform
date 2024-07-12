@@ -103,7 +103,6 @@ public class UserController {
                                                    @RequestParam MultipartFile file) {
         String fileName = "user/" + UUID.randomUUID();
         String url = ossService.updateFile(UserService.class, userId, file, fileName);
-        System.out.println("url: " + url);
         return ResponseUtil.success(url);
     }
 
