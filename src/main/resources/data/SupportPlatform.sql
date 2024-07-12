@@ -261,7 +261,7 @@ CREATE TABLE user_friend_category (
     category_id INT AUTO_INCREMENT primary key,
     user_id INT,
     category_name VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id)
 );
 -- 插入user_friend_category
 INSERT INTO user_friend_category (category_id, user_id, category_name) VALUES
