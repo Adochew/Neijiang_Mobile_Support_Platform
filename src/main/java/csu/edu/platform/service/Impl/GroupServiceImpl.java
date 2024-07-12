@@ -78,7 +78,12 @@ public class GroupServiceImpl implements GroupService {
             groupMember.setGroupId(groupInfo.getGroupId());
             groupMember.setAccountId(groupInfo.getOwnerId());
             groupMember.setRole("管理员");
-            return addGroupMember(groupMember);
+            GroupHistory groupHistory = new GroupHistory();
+            groupHistory.setGroupId(groupInfo.getGroupId());
+            groupHistory.setAccountId(groupInfo.getOwnerId());
+            groupHistory.setAction("create");
+            groupHistory.setDetails("群组创建");
+            return addGroupMember(groupMember) && addGroupHistory(groupHistory);
         }
         return false;
     }
@@ -113,7 +118,12 @@ public class GroupServiceImpl implements GroupService {
         return chatVOList;
     }
     public Boolean addGroupMember(GroupMember groupMember) {
-        return groupMemberMapper.insert(groupMember) != 0;
+        GroupHistory groupHistory = new GroupHistory();
+        groupHistory.setGroupId(groupMember.getGroupId());
+        groupHistory.setAccountId(groupMember.getAccountId());
+        groupHistory.setAction("add");
+        groupHistory.setDetails("添加成员");
+        return groupMemberMapper.insert(groupMember) != 0 && addGroupHistory(groupHistory);
     }
     public Boolean deleteGroupMember(GroupMember groupMember) {
         QueryWrapper<GroupMember> queryWrapper = new QueryWrapper<>();
