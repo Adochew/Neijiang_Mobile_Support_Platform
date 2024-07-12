@@ -95,14 +95,15 @@ public class UserController {
     /**
      * 更新用户图片
      * @param userId 用户ID
-     * @param image 用户图片
+     * @param file 用户图片
      * @return 更新结果
      */
     @PostMapping("/images/{userId}")
     public ResponseEntity<Object> addUserInfoImage(@PathVariable Integer userId,
-                                                   @RequestParam MultipartFile image) {
+                                                   @RequestParam MultipartFile file) {
         String fileName = "user/" + UUID.randomUUID();
-        String url = ossService.updateFile(UserService.class, userId, image, fileName);
+        String url = ossService.updateFile(UserService.class, userId, file, fileName);
+        System.out.println("url: " + url);
         return ResponseUtil.success(url);
     }
 

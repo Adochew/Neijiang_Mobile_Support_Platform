@@ -31,33 +31,27 @@ public class OssServiceImpl implements OssService {
     @Value("${aliyun.oss.endpoint}")
     private String endpoint;
 
-    public String uploadFile(MultipartFile file, String fileName){
+    public String uploadFile(MultipartFile file, String fileName) {
         if (!file.isEmpty()) {
-            File tempFile = null;
             try {
                 // 获取文件扩展名并创建对象名称
                 String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
                 String objectName = fileName + extension;
 
-                // 创建临时文件
-                tempFile = File.createTempFile("upload_", objectName);
-                file.transferTo(tempFile);
+                // 获取文件输入流
+                InputStream inputStream = file.getInputStream();
 
                 // 上传文件到 OSS 并获取 URL
-                PutObjectResult result = ossClient.putObject(bucketName, objectName, tempFile);
+                PutObjectResult result = ossClient.putObject(bucketName, objectName, inputStream);
                 return "https://" + bucketName + "." + endpoint.split("//")[1] + "/" + objectName;
             } catch (Exception e) {
                 System.out.println("Error uploading image: " + e.getMessage());
                 return null;
-            } finally {
-                // 删除临时文件
-                if (tempFile != null && tempFile.exists()) {
-                    tempFile.delete();
-                }
             }
         }
         return null;
     }
+
 
     public Boolean deleteFile(String fileUrl) {
         try {

@@ -180,14 +180,14 @@ public class ProductController {
     /**
      * 更新商品图片
      * @param productId 商品ID
-     * @param image 商品图片
+     * @param file 商品图片
      * @return 更新结果
      */
     @PostMapping("/images/{productId}")
     public ResponseEntity<Object> addMerchantProductImage(@PathVariable Integer productId,
-                                                          @RequestParam MultipartFile image) {
+                                                          @RequestParam MultipartFile file) {
         String fileName = "product/" + UUID.randomUUID();
-        String url = ossService.updateFile(ProductService.class, productId, image, fileName);
+        String url = ossService.updateFile(ProductService.class, productId, file, fileName);
         return ResponseUtil.success(url);
     }
 

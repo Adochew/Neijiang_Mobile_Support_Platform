@@ -96,14 +96,14 @@ public class GroupController {
     /**
      * 更新群组图片
      * @param groupId 群组ID
-     * @param image 群组图片
+     * @param file 群组图片
      * @return 更新结果
      */
     @PostMapping("/images/{groupId}")
     public ResponseEntity<Object> addGroupImage(@PathVariable Integer groupId,
-                                                @RequestParam MultipartFile image) {
+                                                @RequestParam MultipartFile file) {
         String fileName = "group/" + UUID.randomUUID();
-        String url = ossService.updateFile(GroupService.class, groupId, image, fileName);
+        String url = ossService.updateFile(GroupService.class, groupId, file, fileName);
         return ResponseUtil.success(url);
     }
 

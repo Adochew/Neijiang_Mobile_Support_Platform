@@ -165,14 +165,14 @@ public class MerchantController {
     /**
      * 更新商户图片
      * @param merchantId 商户ID
-     * @param image 商户图片
+     * @param file 商户图片
      * @return 更新结果
      */
     @PostMapping("/images/{merchantId}")
     public ResponseEntity<Object> addMerchantImage(@PathVariable Integer merchantId,
-                                                   @RequestParam MultipartFile image) {
+                                                   @RequestParam MultipartFile file) {
         String fileName = "merchant/" + UUID.randomUUID();
-        String url = ossService.updateFile(MerchantService.class, merchantId, image, fileName);
+        String url = ossService.updateFile(MerchantService.class, merchantId, file, fileName);
         return ResponseUtil.success(url);
     }
 
