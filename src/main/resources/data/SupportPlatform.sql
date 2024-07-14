@@ -9,8 +9,8 @@ use support_platform;
 -- group：群组
 
 -- system_account 系统账号表
--- system_article 系统文章表
--- system_article_category 系统文章类别表
+-- system_article 文章表
+-- system_article_category 文章类别表
 
 -- merchant_info 商户信息表
 -- merchant_product 商户产品表
@@ -80,10 +80,10 @@ More content here...
 
 Another paragraph with an image:
 
-![Placeholder Image](https://via.placeholder.com/150)', 1, 1),
-('瑜伽的健康益处', '关于瑜伽的内容', 2, 1),
+![Placeholder Image](https://via.placeholder.com/150)', 1, 4),
+('瑜伽的健康益处', '关于瑜伽的内容', 2, 4),
 ('投资理财技巧', '关于投资理财的内容', 3, 1),
-('在线教育的未来', '关于在线教育的内容', 4, 1);
+('在线教育的未来', '关于在线教育的内容', 4, 5);
 
 -- system_article_category 系统文章类别表（预留）
 CREATE TABLE system_article_category (
@@ -231,10 +231,10 @@ CREATE TABLE user_info (
 );
 -- 插入user_info
 INSERT INTO user_info (account_id, name, email, phone, image_url) VALUES
-(3, '用户一', 'user1@example.com', '0987654321', 'man.png'),
-(4, '用户二', 'user2@example.com', '1234567890', 'cat.png'),
-(5, '用户三', 'user3@example.com', '1122334455', 'panda.png'),
-(6, '用户四', 'user4@example.com', '6677889900', 'user.png');
+(4, '用户一', 'user1@example.com', '0987654321', 'man.png'),
+(5, '用户二', 'user2@example.com', '1234567890', 'cat.png'),
+(6, '用户三', 'user3@example.com', '1122334455', 'panda.png'),
+(7, '用户四', 'user4@example.com', '6677889900', 'user.png');
 
 -- user_friend 用户好友表
 CREATE TABLE user_friend (
