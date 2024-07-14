@@ -114,7 +114,6 @@ public class ArticleController {
      * @return 成功或失败的消息 
      */
     @PostMapping("")
-    @RoleRequired({1})
     public ResponseEntity<Object> addArticle(@RequestBody ArticleVO articleVO) {
         if (articleService.addArticleInfo(articleVO)) {
             return ResponseUtil.success("Article added successfully.");
@@ -129,7 +128,6 @@ public class ArticleController {
      * @return 成功或失败的消息 
      */
     @PutMapping("")
-    @RoleRequired({1})
     public ResponseEntity<Object> updateArticle(@RequestBody ArticleVO articleVO) {
         if (articleService.updateArticleInfo(articleVO)) {
             return ResponseUtil.success("Article updated successfully.");
