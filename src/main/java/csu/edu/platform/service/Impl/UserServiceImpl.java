@@ -112,10 +112,17 @@ public class UserServiceImpl implements UserService {
     }
     public List<UserFriendApplication> getUserFriendApplicationListByUserId(Integer userId){
         QueryWrapper<UserFriendApplication> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("friend_id", userId);
         return userFriendApplicationMapper.selectList(queryWrapper);
     }
     public Boolean addUserFriendApplication(UserFriendApplication userFriendApplication) {
+        QueryWrapper<UserFriendApplication> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userFriendApplication.getUserId());
+        queryWrapper.eq("friend_id", userFriendApplication.getFriendId());
+        UserFriendApplication application = userFriendApplicationMapper.selectOne(queryWrapper);
+        if (application != null) {
+            return false;
+        }
         return userFriendApplicationMapper.insert(userFriendApplication) != 0;
     }
     public Boolean deleteUserFriendApplication(UserFriendApplication userFriendApplication) {
@@ -125,14 +132,19 @@ public class UserServiceImpl implements UserService {
         return userFriendApplicationMapper.delete(queryWrapper) != 0;
     }
     public Boolean addUserFriend(UserFriendApplication userFriendApplication) {
-        UserFriend userFriend = new UserFriend();
-        userFriend.setUserId(userFriendApplication.getUserId());
-        userFriend.setFriendId(userFriendApplication.getFriendId());
-        userFriend.setCategoryId(userFriendApplication.getCategoryId());
-        if(deleteUserFriendApplication(userFriendApplication)){
-            return userFriendMapper.insert(userFriend) != 0;
+        try {
+            UserFriend userFriend = new UserFriend();
+            userFriend.setUserId(userFriendApplication.getUserId());
+            userFriend.setFriendId(userFriendApplication.getFriendId());
+            userFriend.setCategoryId(userFriendApplication.getCategoryId());
+            userFriendMapper.insert(userFriend);
+
+            deleteUserFriendApplication(userFriendApplication);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
     public Boolean updateUserFriend(UserFriend userFriend) {
         UpdateWrapper<UserFriend> updateWrapper = new UpdateWrapper<>();
