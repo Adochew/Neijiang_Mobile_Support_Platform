@@ -1,12 +1,16 @@
 package csu.edu.platform.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import csu.edu.platform.entity.*;
 import csu.edu.platform.vo.UserFriendVO;
 
 import java.util.List;
 
 public interface UserService{
-    String getImageUrl(Integer userId);
+    Integer getMerchantFavoriteCount(Integer merchantId);
+    Integer getProductFavoriteCount(Integer productId);
+
+        String getImageUrl(Integer userId);
     Boolean setImageUrl(Integer userId, String imageUrl);
 
     UserInfo getUserInfoByUserId(Integer userId);

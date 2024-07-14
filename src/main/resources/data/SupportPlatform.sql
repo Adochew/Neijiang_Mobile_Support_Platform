@@ -117,10 +117,10 @@ CREATE TABLE merchant_info (
 -- 插入merchant_info
 INSERT INTO merchant_info (merchant_id, owner_id, name, address, phone, email, category_id, business_type, business_environment, business_location, product_category, image_url) VALUES
 (1, 2, '商户一', '北京市朝阳区', '1234567890', 'merchant1@example.com', 1, '零售', '线上', '中国', '电子产品', 'https://mobile-support-platform.oss-cn-chengdu.aliyuncs.com/merchant/merchant1.jpg'),
-(2, 3, '商户二', '上海市浦东新区', '0987654321', 'merchant2@example.com', 2, '餐饮', '线下', '中国', '食品', 'image2.jpg'),
-(3, 2, '商户三', '深圳市南山区', '1122334455', 'merchant3@example.com', 3, '服装', '线上线下', '中国', '服务', 'image3.jpg'),
-(4, 3, '商户四', '广州市天河区', '6677889900', 'merchant4@example.com', 3, '服装', '线上', '中国', '服装', 'image4.jpg'),
-(5, 3, '面馆', '成都市郫都区', '6677889900', 'merchant4@example.com', 2, '餐饮', '线上', '中国', '食品', 'image4.jpg');
+(2, 3, '商户二', '上海市浦东新区', '0987654321', 'merchant2@example.com', 2, '餐饮', '线下', '中国', '食品', 'image2.jpg');
+# (3, 2, '商户三', '深圳市南山区', '1122334455', 'merchant3@example.com', 3, '服装', '线上线下', '中国', '服务', 'image3.jpg'),
+# (4, 3, '商户四', '广州市天河区', '6677889900', 'merchant4@example.com', 3, '服装', '线上', '中国', '服装', 'image4.jpg'),
+# (5, 3, '面馆', '成都市郫都区', '6677889900', 'merchant4@example.com', 2, '餐饮', '线上', '中国', '食品', 'image4.jpg');
 
 -- merchant_product 商户产品表
 CREATE TABLE merchant_product (

@@ -27,6 +27,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserFavoriteProductMapper userFavoriteProductMapper;
 
+    public Integer getMerchantFavoriteCount(Integer merchantId) {
+        QueryWrapper<UserFavoriteMerchant> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("merchant_id", merchantId);
+        return Math.toIntExact(userFavoriteMerchantMapper.selectCount(queryWrapper));
+    }
+    public Integer getProductFavoriteCount(Integer productId) {
+        QueryWrapper<UserFavoriteProduct> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_id", productId);
+        return Math.toIntExact(userFavoriteProductMapper.selectCount(queryWrapper));
+    }
+
     public String getImageUrl(Integer userId) {
         return userInfoMapper.selectById(userId).getImageUrl();
     }

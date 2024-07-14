@@ -290,6 +290,26 @@ public class UserController {
     }
 
     /**
+     * 获取喜爱商户计数
+     * @param merchantId
+     * @return 喜爱商户计数
+     */
+    @GetMapping("/favorite_merchants/{merchantId}/count")
+    public ResponseEntity<Object> getUserFavoriteMerchantsCount(@PathVariable Integer merchantId) {
+        return ResponseUtil.success(userService.getMerchantFavoriteCount(merchantId));
+    }
+
+    /**
+     * 获取喜爱产品计数
+     * @param productId
+     * @return 喜爱产品计数
+     */
+    @GetMapping("/favorite_products/{productId}/count")
+    public ResponseEntity<Object> getUserFavoriteProductsCount(@PathVariable Integer productId) {
+        return ResponseUtil.success(userService.getProductFavoriteCount(productId));
+    }
+
+    /**
      * 获取用户收藏的商户
      * @param userId 用户ID
      * @return 收藏的商户列表
