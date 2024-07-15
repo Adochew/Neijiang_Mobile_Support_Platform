@@ -55,6 +55,16 @@ public class GroupController {
     }
 
     /**
+     * 根据ownerID获取群组信息
+     * @param ownerId 账户ID
+     * @return 群组信息
+     */
+    @GetMapping("/owners/{ownerId}")
+    public ResponseEntity<Object> getGroupInfoByOwnerId(@PathVariable Integer ownerId) {
+        return ResponseUtil.success(groupService.getGroupInfoByOwnerId(ownerId));
+    }
+
+    /**
      * 根据关键字搜索群组信息
      * @param request 包含搜索关键字的请求体
      * @return 符合关键字的群组信息列表
