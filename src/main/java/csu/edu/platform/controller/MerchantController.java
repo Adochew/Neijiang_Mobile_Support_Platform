@@ -173,6 +173,7 @@ public class MerchantController {
     @PutMapping("")
     @RoleRequired({2})
     public ResponseEntity<Object> updateMerchant(@RequestBody MerchantVO merchantVO){
+        merchantVO.setAddress(mapService.getLonAndLatByAddress(merchantVO.getAddress()));
         if (merchantService.updateMerchantInfo(merchantVO)){
             return ResponseUtil.success("Merchant updated.");
         } else {
