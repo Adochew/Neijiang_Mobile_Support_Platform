@@ -93,14 +93,7 @@ public class MerchantController {
      */
     @GetMapping("/{merchantId}")
     public ResponseEntity<Object> getMerchantByMerchantId(@PathVariable Integer merchantId){
-        MerchantVO merchantVO = merchantService.getMerchantVOByMerchantId(merchantId);
-        String [] address = merchantVO.getAddress().split(",");
-        StringBuilder sb = new StringBuilder();
-        for (String value :  mapService.getLocationFromCoordinates(address[0], address[1]).values()) {
-            sb.append(value);
-        }
-        merchantVO.setAddress(sb.toString());
-        return ResponseUtil.success(merchantVO);
+        return ResponseUtil.success(merchantService.getMerchantVOByMerchantId(merchantId));
     }
 
     /**
@@ -110,14 +103,7 @@ public class MerchantController {
      */
     @GetMapping("/accountId/{accountId}")
     public ResponseEntity<Object> getMerchantByAccountId(@PathVariable Integer accountId){
-       MerchantVO merchantVO = merchantService.getMerchantVOByAccountId(accountId);
-       String [] address = merchantVO.getAddress().split(",");
-        StringBuilder sb = new StringBuilder();
-        for (String value :  mapService.getLocationFromCoordinates(address[0], address[1]).values()) {
-            sb.append(value);
-        }
-        merchantVO.setAddress(sb.toString());
-       return ResponseUtil.success(merchantVO);
+       return ResponseUtil.success(merchantService.getMerchantVOByAccountId(accountId));
     }
 
     /**
