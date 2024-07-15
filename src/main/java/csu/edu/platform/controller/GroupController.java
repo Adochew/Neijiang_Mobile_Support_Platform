@@ -72,11 +72,11 @@ public class GroupController {
      */
     @PostMapping("")
     public ResponseEntity<Object> addGroupInfo(@RequestBody GroupInfo groupInfo) {
-        if (groupService.addGroupInfo(groupInfo)) {
-            return ResponseUtil.success("GroupInfo added.");
-        } else {
-            return ResponseUtil.error("GroupInfo not added.", HttpStatus.BAD_REQUEST);
-        }
+            if (groupService.addGroupInfo(groupInfo)){
+                return ResponseUtil.success("GroupInfo added.");
+            } else{
+                return ResponseUtil.error("GroupInfo not added.", HttpStatus.BAD_REQUEST);
+            }
     }
 
     /**

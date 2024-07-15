@@ -6,6 +6,7 @@ import csu.edu.platform.entity.MerchantCategory;
 import csu.edu.platform.entity.MerchantInfo;
 import csu.edu.platform.entity.MerchantProduct;
 import csu.edu.platform.entity.MerchantPromotion;
+import csu.edu.platform.service.MapService;
 import csu.edu.platform.service.MerchantService;
 import csu.edu.platform.service.OssService;
 import csu.edu.platform.service.ProductService;
@@ -27,6 +28,9 @@ public class MerchantController {
     private MerchantService merchantService;
     @Autowired
     private OssService ossService;
+    @Autowired
+    private MapService mapService;
+
 
     /**
      * 获取所有商户类别
@@ -89,7 +93,14 @@ public class MerchantController {
      */
     @GetMapping("/{merchantId}")
     public ResponseEntity<Object> getMerchantByMerchantId(@PathVariable Integer merchantId){
-        return ResponseUtil.success(merchantService.getMerchantVOByMerchantId(merchantId));
+        MerchantVO merchantVO = merchantService.getMerchantVOByMerchantId(merchantId);
+        String [] address = merchantVO.getAddress().split(",");
+        StringBuilder sb = new StringBuilder();
+        for (String value :  mapService.getLocationFromCoordinates(address[0], address[1]).values()) {
+            sb.append(value);
+        }
+        merchantVO.setAddress(sb.toString());
+        return ResponseUtil.success(merchantVO);
     }
 
     /**
@@ -99,7 +110,14 @@ public class MerchantController {
      */
     @GetMapping("/accountId/{accountId}")
     public ResponseEntity<Object> getMerchantByAccountId(@PathVariable Integer accountId){
-        return ResponseUtil.success(merchantService.getMerchantVOByAccountId(accountId));
+       MerchantVO merchantVO = merchantService.getMerchantVOByAccountId(accountId);
+       String [] address = merchantVO.getAddress().split(",");
+        StringBuilder sb = new StringBuilder();
+        for (String value :  mapService.getLocationFromCoordinates(address[0], address[1]).values()) {
+            sb.append(value);
+        }
+        merchantVO.setAddress(sb.toString());
+       return ResponseUtil.success(merchantVO);
     }
 
     /**
