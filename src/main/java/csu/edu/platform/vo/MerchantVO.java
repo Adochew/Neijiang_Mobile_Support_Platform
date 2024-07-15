@@ -17,6 +17,7 @@ public class MerchantVO {
     private String categoryName;
     private String name;
     private String address;
+    private String coordinates;
     private String phone;
     private String email;
     private String businessType;
@@ -33,6 +34,7 @@ public class MerchantVO {
         this.categoryName = merchantCategory.getCategoryName();
         this.name = merchantInfo.getName();
         this.address = merchantInfo.getAddress();
+        this.coordinates = merchantInfo.getCoordinates();
         this.phone = merchantInfo.getPhone();
         this.email = merchantInfo.getEmail();
         this.businessType = merchantInfo.getBusinessType();
@@ -50,6 +52,7 @@ public class MerchantVO {
         merchantInfo.setCategoryId(categoryId);
         merchantInfo.setName(name);
         merchantInfo.setAddress(address);
+        merchantInfo.setCoordinates(coordinates);
         merchantInfo.setPhone(phone);
         merchantInfo.setEmail(email);
         merchantInfo.setBusinessType(businessType);

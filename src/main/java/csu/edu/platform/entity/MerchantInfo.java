@@ -16,6 +16,7 @@ public class MerchantInfo {
     private Integer categoryId;
     private String name;
     private String address;
+    private String coordinates;
     private String phone;
     private String email;
     private String businessType;

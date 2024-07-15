@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service("merchantService")
 public class MerchantServiceImpl implements MerchantService {
@@ -48,14 +47,14 @@ public class MerchantServiceImpl implements MerchantService {
     public MerchantVO getMerchantVOByMerchantId(Integer merchantId) {
         MerchantInfo merchantInfo = merchantInfoMapper.selectById(merchantId);
         MerchantCategory merchantCategory = merchantCategoryMapper.selectById(merchantInfo.getCategoryId());
-        return transferLocation(new MerchantVO(merchantInfo, merchantCategory));
+        return new MerchantVO(merchantInfo, merchantCategory);
     }
     public MerchantVO getMerchantVOByAccountId(Integer accountId){
         QueryWrapper<MerchantInfo> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("owner_id", accountId);
         MerchantInfo merchantInfo = merchantInfoMapper.selectOne(queryWrapper1);
         MerchantCategory merchantCategory = merchantCategoryMapper.selectById(merchantInfo.getCategoryId());
-        return transferLocation(new MerchantVO(merchantInfo, merchantCategory));
+        return new MerchantVO(merchantInfo, merchantCategory);
     }
     public List<MerchantVO> getMerchantVOList() {
         List<MerchantInfo> merchantInfoList = merchantInfoMapper.selectList(null);
@@ -64,8 +63,7 @@ public class MerchantServiceImpl implements MerchantService {
             QueryWrapper<MerchantCategory> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("category_id", merchantInfo.getCategoryId());
             MerchantCategory merchantCategory = merchantCategoryMapper.selectOne(queryWrapper1);
-            System.out.println(merchantCategory+":"+merchantInfo);
-            MerchantVO merchantVO = transferLocation(new MerchantVO(merchantInfo, merchantCategory));
+            MerchantVO merchantVO = new MerchantVO(merchantInfo, merchantCategory);
             merchantVOList.add(merchantVO);
         }
         return merchantVOList;
@@ -77,7 +75,7 @@ public class MerchantServiceImpl implements MerchantService {
         List<MerchantInfo> merchantInfoList = merchantInfoMapper.selectList(queryWrapper);
         List<MerchantVO> merchantVOList = new ArrayList<>();
         for (MerchantInfo merchantInfo : merchantInfoList) {
-            MerchantVO merchantVO = transferLocation(new MerchantVO(merchantInfo, merchantCategory));
+            MerchantVO merchantVO = new MerchantVO(merchantInfo, merchantCategory);
             merchantVOList.add(merchantVO);
         }
         return merchantVOList;
@@ -91,15 +89,23 @@ public class MerchantServiceImpl implements MerchantService {
             QueryWrapper<MerchantCategory> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("category_id", merchantInfo.getCategoryId());
             MerchantCategory merchantCategory = merchantCategoryMapper.selectOne(queryWrapper1);
-            MerchantVO merchantVO = transferLocation(new MerchantVO(merchantInfo, merchantCategory));
+            MerchantVO merchantVO = new MerchantVO(merchantInfo, merchantCategory);
             merchantVOList.add(merchantVO);
         }
         return merchantVOList;
     }
     public Boolean addMerchantInfo(MerchantVO merchantVO) {
+        merchantVO.setCoordinates(mapService.getLonAndLatByAddress(merchantVO.getAddress()));
+        String [] strings = merchantVO.getCoordinates().split(",");
+        StringBuilder sb = new StringBuilder();
+        for (String value : mapService.getLocationFromCoordinates(strings[0],strings[1]).values()) {
+            sb.append(value);
+        }
+       merchantVO.setAddress( sb.toString());
         return merchantInfoMapper.insert(merchantVO.parseMerchantInfo()) != 0;
     }
     public Boolean updateMerchantInfo(MerchantVO merchantVO) {
+        merchantVO.setCoordinates(mapService.getLonAndLatByAddress(merchantVO.getAddress()));
         return merchantInfoMapper.updateById(merchantVO.parseMerchantInfo()) != 0;
     }
     public Boolean deleteMerchantInfo(Integer merchantId) {
@@ -119,14 +125,5 @@ public class MerchantServiceImpl implements MerchantService {
     }
     public Boolean deleteMerchantPromotion(Integer promotionId) {
         return merchantPromotionMapper.deleteById(promotionId) != 0;
-    }
-    private MerchantVO transferLocation(MerchantVO merchantVO) {
-        String [] address = merchantVO.getAddress().split(",");
-        StringBuilder sb = new StringBuilder();
-        for (String value :  mapService.getLocationFromCoordinates(address[0], address[1]).values()) {
-            sb.append(value);
-        }
-        merchantVO.setAddress(sb.toString());
-        return  merchantVO;
     }
 }
