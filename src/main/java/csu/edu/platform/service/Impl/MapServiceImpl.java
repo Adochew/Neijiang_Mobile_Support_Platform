@@ -14,6 +14,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service("mapService")
@@ -59,7 +60,7 @@ public class MapServiceImpl implements MapService {
         JSONObject addressComponent = regeocode.getJSONObject("addressComponent");
 
         // 封装地址信息到Map中
-        Map<String, String> addressMap = new HashMap<>();
+        Map<String, String> addressMap = new LinkedHashMap<>();
         addressMap.put("province", addressComponent.getString("province"));
         addressMap.put("city", addressComponent.getString("city"));
         addressMap.put("district", addressComponent.getString("district"));
