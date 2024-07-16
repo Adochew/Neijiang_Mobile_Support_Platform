@@ -12,7 +12,7 @@ public interface GroupService {
     Boolean setImageUrl(Integer groupId, String imageUrl);
 
     GroupInfo getGroupInfoByGroupId(Integer groupId);
-    GroupInfo getGroupInfoByOwnerId(Integer ownerId);
+    List<GroupInfo> getGroupInfoByOwnerId(Integer ownerId);
     List<GroupInfo> getGroupInfoList();
     List<GroupInfo> getGroupInfoListByAccountId(Integer accountId);
     List<GroupInfo> getGroupInfoListByKeyword(String keyword);

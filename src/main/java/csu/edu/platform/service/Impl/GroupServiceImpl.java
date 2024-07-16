@@ -47,10 +47,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupInfo getGroupInfoByOwnerId(Integer ownerId) {
+    public List<GroupInfo> getGroupInfoByOwnerId(Integer ownerId) {
         QueryWrapper<GroupInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("owner_id", ownerId);
-        return groupInfoMapper.selectOne(queryWrapper);
+        return groupInfoMapper.selectList(queryWrapper);
     }
 
     public List<GroupInfo> getGroupInfoList(){
