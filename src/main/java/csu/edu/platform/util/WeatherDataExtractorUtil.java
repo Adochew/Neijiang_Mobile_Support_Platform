@@ -15,7 +15,7 @@ public class WeatherDataExtractorUtil {
         JSONObject result = new JSONObject();
         result.put("date", jsonObject.getString("date"));
         result.put("week", jsonObject.getString("week"));
-        result.put("city", jsonObject.getString("city"));
+        result.put("city", "内江");
         result.put("wea", jsonObject.getString("wea"));
         result.put("tem", jsonObject.getDouble("tem").intValue()); // Convert to integer
         result.put("tem1", jsonObject.getDouble("tem1").intValue()); // Convert to integer
