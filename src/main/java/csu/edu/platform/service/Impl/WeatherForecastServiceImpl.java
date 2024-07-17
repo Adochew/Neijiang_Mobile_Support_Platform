@@ -23,7 +23,7 @@ public class WeatherForecastServiceImpl implements WeatherForecastService {
   @Autowired
    private MapService mapService;
     public String getWeatherByName(String name) {
-        String urlString = "https://v1.yiketianqi.com/free/v2030?appid=46714281&appsecret=w1ktIvpt&lng=#1&lat=#2&hours=1";
+        String urlString = "https://v1.yiketianqi.com/free/v2030?appid=73774958&appsecret=E5QsnhaK&lng=#1&lat=#2&hours=1";
         String lngAndLat = mapService.getLonAndLatByAddress(name);
         try {
             System.out.println(lngAndLat);
